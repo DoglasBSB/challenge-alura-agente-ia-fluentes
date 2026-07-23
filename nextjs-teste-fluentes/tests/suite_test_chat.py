@@ -63,7 +63,7 @@ CASOS_DE_TESTE = [
         "payload": {
             "message": "Como funciona a emissão de certificado dos cursos?"
         },
-        "verificacao": lambda resp: "80%" in resp or "pdf" in resp.lower() or "qr code" in resp.lower() or "certificado" in resp.lower(),
+        "verificacao": lambda resp: "80%" in resp or "qr code" in resp.lower() or "certificado" in resp.lower(),
         "erro_msg": "IA não respondeu os critérios de emissão do certificado digital."
     },
     {
