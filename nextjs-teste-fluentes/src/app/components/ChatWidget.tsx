@@ -9,6 +9,59 @@ interface Message {
 
 const LOCAL_STORAGE_KEY = "ia_fluentes_chat_history";
 
+// Helper para renderizar formatação Markdown (negrito **, listas *) de forma limpa e elegante na UI
+function renderFormattedMessage(text: string) {
+  if (!text) return null;
+
+  const lines = text.split("\n");
+  return (
+    <div className="space-y-1">
+      {lines.map((line, lIdx) => {
+        const trimmed = line.trim();
+        if (!trimmed) return <div key={lIdx} className="h-1" />;
+
+        // Formatar negrito **texto**
+        const parseBold = (content: string) => {
+          const parts = content.split(/(\*\*.*?\*\*)/g);
+          return parts.map((part, pIdx) => {
+            if (part.startsWith("**") && part.endsWith("**") && part.length > 4) {
+              return (
+                <strong key={pIdx} className="font-bold text-zinc-900 dark:text-zinc-100">
+                  {part.slice(2, -2)}
+                </strong>
+              );
+            }
+            return part;
+          });
+        };
+
+        // Formatar marcadores de lista (* ou -)
+        if (trimmed.startsWith("* ") || trimmed.startsWith("- ")) {
+          return (
+            <div key={lIdx} className="flex gap-2 items-start pl-1.5 my-0.5">
+              <span className="text-indigo-500 font-bold leading-relaxed">•</span>
+              <span className="flex-1">{parseBold(trimmed.slice(2))}</span>
+            </div>
+          );
+        }
+
+        // Formatar marcadores numéricos (ex: 1. 2.)
+        const matchNum = trimmed.match(/^(\d+\.)\s+(.*)$/);
+        if (matchNum) {
+          return (
+            <div key={lIdx} className="flex gap-2 items-start pl-1.5 my-0.5">
+              <span className="text-indigo-500 font-bold leading-relaxed text-xs">{matchNum[1]}</span>
+              <span className="flex-1">{parseBold(matchNum[2])}</span>
+            </div>
+          );
+        }
+
+        return <p key={lIdx} className="leading-relaxed my-0.5">{parseBold(line)}</p>;
+      })}
+    </div>
+  );
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -329,7 +382,7 @@ export default function ChatWidget() {
                         : "bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 border border-zinc-100 dark:border-zinc-700 rounded-tl-none"
                     }`}
                   >
-                    <p className="leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                    {renderFormattedMessage(msg.text)}
                   </div>
                 </div>
               ))
