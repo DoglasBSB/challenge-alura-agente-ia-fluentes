@@ -1,0 +1,9 @@
+{
+  "uri": "http://localhost:3000/api/chat",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "req_template": "{\\\"message\\\": \\\"$prompt\\\"}",
+  "response_path": "reply"
+}

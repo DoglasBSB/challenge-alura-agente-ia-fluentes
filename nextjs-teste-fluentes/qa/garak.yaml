@@ -1,0 +1,11 @@
+plugins:
+  model_type: rest.RestGenerator
+  model_name: http://localhost:3000/api/chat
+  generators:
+    rest:
+      RestGenerator:
+        uri: "http://localhost:3000/api/chat"
+        method: "post"
+        req_template: '{"message": "$INPUT"}'
+        response_json: true
+        response_json_field: "reply"
