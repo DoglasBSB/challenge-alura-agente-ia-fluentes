@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IA Fluentes | Escola de Idiomas com Inteligência Artificial",
-  description: "Aprenda inglês com eficiência máxima através da IA Fluentes. Cursos modernos e assistente de IA integrado.",
+  title: "IA Fluentes | Escola Online de Idiomas com IA",
+  description: "Aprenda idiomas mais rápido com metodologia moderna, conversação ativa e assistência inteligente 24h.",
 };
 
 export default function RootLayout({

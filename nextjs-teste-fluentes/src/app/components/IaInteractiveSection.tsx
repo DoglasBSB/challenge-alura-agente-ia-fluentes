@@ -1,11 +1,11 @@
 "use client";
 
 const SUGGESTIONS = [
+  "Vocês oferecem curso de Espanhol para Viagens?",
   "Quantos dias tenho para pedir o reembolso da matrícula?",
   "Como funciona a emissão de certificado digital?",
-  "O que o regulamento do estudante fala sobre plágio?",
-  "Como funciona o programa de bolsas de estudos?",
-  "Quais são os cursos de IA e Tecnologia disponíveis?",
+  "Quais idiomas estão disponíveis além do Inglês?",
+  "Como funciona o curso de Preparação para o TOEFL?",
 ];
 
 export default function IaInteractiveSection() {
@@ -31,15 +31,15 @@ export default function IaInteractiveSection() {
             </div>
             
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-6 leading-tight">
-              Seu assistente inteligente para tirar dúvidas sobre a escola
+              Seu assistente inteligente para aprender um novo idioma
             </h2>
             
             <p className="text-zinc-300 mb-8 text-base leading-relaxed">
-              Está em dúvida sobre prazos de reembolso, emissão de certificados, regulamento ou programa de bolsas? Pergunte diretamente ao nosso Assistente de IA baseado em RAG!
+              Está em dúvida sobre qual idioma escolher, prazos de reembolso, emissão de certificados ou programa de bolsas? Pergunte diretamente ao nosso Assistente de IA!
             </p>
 
             <button
-              onClick={() => handleSuggestionClick("Olá! Como você pode me ajudar com dúvidas sobre a escola?")}
+              onClick={() => handleSuggestionClick("Olá! Como você pode me ajudar a escolher um curso de idiomas?")}
               className="px-6 py-3.5 rounded-xl font-bold bg-white text-indigo-950 hover:bg-zinc-100 transition-all shadow-lg active:scale-95 inline-flex items-center gap-2 cursor-pointer"
             >
               <span>Conversar agora</span>
@@ -86,7 +86,7 @@ export default function IaInteractiveSection() {
                     >
                       <path
                         fillRule="evenodd"
-                        d="M3 10a.75.75 0 0 1 .75-.75h10.63l-3.01-3.04a.75.75 0 1 1 1.08-1.04l4.25 4.3a.75.75 0 0 1 0 1.06l-4.25 4.3a.75.75 0 1 1-1.08-1.04l3.01-3.04H3.75A.75.75 0 0 1 3 10Z"
+                        d="M3 10a.75.75 0 0 1 .75-.75h10.63l-3.01-3.04a.75.75 0 1 1 1.08-1.04l4.25 4.3a.75.75 0 1 1-1.08-1.04l3.01-3.04H3.75A.75.75 0 0 1 3 10Z"
                         clipRule="evenodd"
                       />
                     </svg>

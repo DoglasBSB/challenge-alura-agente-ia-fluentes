@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CURSOS } from "../data/landingData";
 
 export default function CursosGrid() {
-  const [activeCategory, setActiveCategory] = useState<"todos" | "tecnologia" | "ia" | "preparatorio">("todos");
+  const [activeCategory, setActiveCategory] = useState<"todos" | "ingles" | "outros" | "preparatorio">("todos");
 
   const filteredCursos = CURSOS.filter((curso) => {
     if (activeCategory === "todos") return true;
@@ -25,10 +25,10 @@ export default function CursosGrid() {
       <div className="container mx-auto max-w-5xl px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-4 text-zinc-900 dark:text-zinc-50">
-            Nossos Cursos de Tecnologia & IA
+            Nossos Cursos de Idiomas
           </h2>
           <p className="text-zinc-600 dark:text-zinc-400 max-w-lg mx-auto">
-            Projetados para capacitar você do básico da programação ao desenvolvimento de Agentes de IA e RAG.
+            Projetados para atender às suas necessidades, do absoluto básico à fluência para o mercado de trabalho internacional.
           </p>
         </div>
 
@@ -36,9 +36,9 @@ export default function CursosGrid() {
         <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
           {[
             { id: "todos", label: "Todos os Cursos" },
-            { id: "tecnologia", label: "Programação & Lógica" },
-            { id: "ia", label: "IA & RAG" },
-            { id: "preparatorio", label: "Agentes & Cloud" },
+            { id: "ingles", label: "Cursos de Inglês" },
+            { id: "outros", label: "Outros Idiomas" },
+            { id: "preparatorio", label: "Preparatórios (TOEFL)" },
           ].map((cat) => (
             <button
               key={cat.id}
@@ -62,7 +62,7 @@ export default function CursosGrid() {
               className="group relative flex flex-col justify-between rounded-2xl border border-zinc-200/60 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div>
-                {/* Indicador de Curso */}
+                {/* Indicador do Curso */}
                 <div className={`w-full h-36 rounded-xl p-4 flex flex-col justify-between text-white mb-6 shadow-inner relative overflow-hidden bg-gradient-to-tr ${curso.imagem}`}>
                   <div className="absolute inset-0 bg-black/10 mix-blend-overlay -z-10" />
                   <div className="flex items-center justify-between z-10">

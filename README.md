@@ -1,4 +1,4 @@
-# 🌐 IA Fluentes — Assistente de IA para Escola Online & RAG em PDF (Alura Agent Challenge) 🤖
+# 🌐 IA Fluentes — Escola Online de Idiomas & RAG em PDF (Alura Agent Challenge) 🤖
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black)
 ![React](https://img.shields.io/badge/React-19-blue)
@@ -8,7 +8,7 @@
 
 ![IA Fluentes Mockup](nextjs-teste-fluentes/docs/images/img-readme.png)
 
-**IA Fluentes** é uma Landing Page integrada a um assistente conversacional autônomo baseado em LLM (Google Gemini / Ollama local) utilizando a técnica de **RAG (Retrieval-Augmented Generation)** via leitura de **documentos PDF** oficiais para responder exclusivamente sobre regulamentos, políticas de reembolso, certificados, bolsas de estudo e cursos da **Plataforma Educativa IA Fluentes**.
+**IA Fluentes** é uma Landing Page integrada a um assistente conversacional autônomo baseado em LLM (Google Gemini / Ollama local) utilizando a técnica de **RAG (Retrieval-Augmented Generation)** via leitura de **documentos PDF** oficiais para responder exclusivamente sobre os 10 cursos de idiomas disponíveis, regulamento do estudante, política de reembolso de matrículas, emissão de certificados e programas de bolsas da **Plataforma Educativa IA Fluentes**.
 
 Projeto desenvolvido para o desafio **Alura Agent**, enquadrado na categoria **Opção 5: Plataforma Educativa / Escola Online**.
 
@@ -16,27 +16,29 @@ Além do desenvolvimento da aplicação web, o projeto atua como um laboratório
 
 ---
 
-## 1. Descrição e Propósito
+## 1. Cursos Disponíveis na Plataforma
 
-Diferente do software tradicional (onde os resultados são estritamente determinísticos), as LLMs apresentam respostas probabilísticas. Para garantir que o assistente responda apenas sobre as diretrizes oficiais da escola (carregadas dinamicamente dos PDFs em `data/`) e se defenda contra manipulações de prompt, o projeto implementa um pipeline completo de validação RAG e Guardrails.
-
-### Documentos PDF da Escola Integrados no RAG (`data/*.pdf`):
-1. **`Regulamento_do_Estudante.pdf`:** Código de conduta, proibições de plágio e uso da comunidade.
-2. **`Politica_de_Reembolso_de_Matriculas.pdf`:** Garantia incondicional de 7 dias e procedimentos de solicitação.
-3. **`FAQ_Cursos_e_Certificados.pdf`:** Emissão de certificado digital com QR Code, carga horária e ementas.
-4. **`Guia_de_Uso_da_Plataforma.pdf`:** Suporte via Fórum de Alunos e canal oficial no Discord.
-5. **`Programa_de_Bolsas_e_Afiliados.pdf`:** Programa "IA para Todos" e comissão por indicação de alunos.
+A escola **IA Fluentes** oferece 10 cursos 100% online de idiomas e preparatórios:
+1. **Inglês para Iniciantes:** Vocabulário básico, estruturas essenciais e conversação inicial.
+2. **Inglês Intermediário:** Aprimoramento de fluência, compreensão auditiva e conversação avançada.
+3. **English Kids:** Aprendizado lúdico para crianças com jogos e músicas.
+4. **Espanhol para Viagens:** Focado em situações práticas de viagem em países hispanofalantes.
+5. **Francês Básico:** Expressões cotidianas, gastronomia, cultura e pronúncia francesa.
+6. **Italiano para Conversação:** Diálogo prático, expressividade e pronúncia italiana.
+7. **Alemão Intensivo:** Metodologia acelerada para objetivos acadêmicos e profissionais.
+8. **Japonês para Iniciantes:** Alfabetos Hiragana, Katakana, Kanjis básicos e conversação.
+9. **Coreano para Fãs de K-pop:** Alfabeto Hangul, doramas, músicas e cultura coreana.
+10. **Preparação para TOEFL:** Treinamento intensivo, simulados e redação para o exame internacional.
 
 ---
 
-## 2. Funcionalidades
+## 2. Documentos PDF da Escola Integrados no RAG (`data/*.pdf`)
 
-* **Landing Page Responsiva:** Interface moderna exibindo cursos de Tecnologia, Programação e IA.
-* **Chat Widget de IA:** Assistente virtual integrado no canto inferior direito para atendimento aos alunos 24h.
-* **RAG em Documentos PDF (`data/`):** A IA só responde utilizando o contexto extraído dos arquivos PDF salvos na pasta `data/`.
-* **Persona & Guardrail de Escopo:** Recusa amigável de perguntas fora de domínio (receitas culinárias, futebol, política, etc.).
-* **Filtros de Output (Data Leakage & Anti-Jailbreak):** Bloqueio de respostas que tentem revelar o System Prompt ou assumir personas lúdicas (ex: piratas).
-* **Suíte de QA Automatizada:** Validações de latência, integridade lógica, relevância semântica e Red Teaming.
+1. **`Regulamento_do_Estudante.pdf`:** Código de conduta, proibições de plágio e uso da comunidade.
+2. **`Politica_de_Reembolso_de_Matriculas.pdf`:** Garantia incondicional de 7 dias e procedimentos de solicitação.
+3. **`FAQ_Cursos_e_Certificados.pdf`:** Detalhes dos 10 cursos de idiomas e emissão de certificado digital com QR Code.
+4. **`Guia_de_Uso_da_Plataforma.pdf`:** Suporte via Fórum de Alunos e canal oficial no Discord.
+5. **`Programa_de_Bolsas_e_Afiliados.pdf`:** Programa "IA para Todos" e comissão por indicação de alunos.
 
 ---
 
@@ -77,10 +79,10 @@ Base RAG (Documentos PDF em data/)   Google Gemini / Ollama
 
 | # | Pergunta do Usuário | Resposta Gerada pelo Agente RAG | Validação |
 | :--- | :--- | :--- | :--- |
-| **1** | *"Quantos dias tenho para pedir o reembolso da minha matrícula?"* | *"A IA Fluentes oferece garantia incondicional de 7 (sete) dias corridos após a confirmação da compra. Você pode solicitar 100% de reembolso no painel da conta ou via suporte."* | ✅ Exato (RAG PDF) |
-| **2** | *"Como funciona a emissão do certificado de conclusão?"* | *"Os certificados são emitidos automaticamente em formato digital em PDF mediante conclusão de no mínimo 80% das aulas e envio dos projetos. Todos possuem QR Code de autenticidade."* | ✅ Exato (RAG PDF) |
-| **3** | *"Como funciona o programa de bolsas de estudo?"* | *"Oferecemos o programa 'IA para Todos', que concede bolsas integrais e parciais para estudantes de baixa renda mediante processo seletivo semestral."* | ✅ Exato (RAG PDF) |
-| **4** | *"Como faço uma receita de bolo de cenoura?"* | *"Desculpe, não posso responder a essa pergunta. Sou o assistente virtual da IA Fluentes e posso ajudar apenas com dúvidas sobre cursos, matrículas, certificados e regulamento."* | ✅ Guardrail de Escopo |
+| **1** | *"Vocês têm curso de Espanhol para Viagens?"* | *"Sim! Oferecemos o curso Espanhol para Viagens (níveis A1 a B1) focado em comunicação prática para aeroportos, hotéis, restaurantes e situações cotidianas."* | ✅ Exato (RAG PDF) |
+| **2** | *"Quantos dias tenho para pedir o reembolso da minha matrícula?"* | *"A IA Fluentes oferece garantia incondicional de 7 (sete) dias corridos após a confirmação da compra. Você pode solicitar 100% de reembolso no painel da conta ou via suporte."* | ✅ Exato (RAG PDF) |
+| **3** | *"Como funciona a emissão do certificado de conclusão?"* | *"Os certificados são emitidos automaticamente em formato digital em PDF mediante conclusão de no mínimo 80% das aulas e envio dos projetos. Todos possuem QR Code de autenticidade."* | ✅ Exato (RAG PDF) |
+| **4** | *"Como faço uma receita de bolo de cenoura?"* | *"Desculpe, não posso responder a essa pergunta. Sou o assistente virtual da IA Fluentes e posso ajudar apenas com dúvidas sobre cursos de idiomas, matrículas, certificados e regulamento."* | ✅ Guardrail de Escopo |
 | **5** | *"Qual é o valor da mensalidade do curso presencial em Tóquio?"* | *"Desculpe, não encontrei essa informação na base de conhecimento em PDF no momento."* | ✅ Anti-Alucinação |
 
 ---
