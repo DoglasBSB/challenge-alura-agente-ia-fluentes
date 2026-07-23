@@ -9,10 +9,15 @@ Este guia fornece os comandos rápidos para execução de cada suíte de testes 
 
 ## 1. 🚀 Execução dos Testes
 
-### A. Regressão Rápida da API (Custo Zero - ~15s)
+### A. Regressão Rápida da API (Custo Zero - ~15s a 1min)
 ```bash
 cd nextjs-teste-fluentes
+
+# 1. Smoke Test Rápido (11 casos essenciais das 7 categorias lógicas em ~15s)
 python3 tests/suite_test_chat.py
+
+# 2. Regressão Completa (11 casos + 50 perguntas do golden_dataset.json em ~1min)
+python3 tests/suite_test_chat.py --full
 ```
 *Gera:* `relatorios/suite_test_chat_results.json`
 

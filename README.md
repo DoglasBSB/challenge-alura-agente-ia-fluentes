@@ -148,8 +148,11 @@ O guia detalhado está disponível no [Plano de Testes](nextjs-teste-fluentes/do
 ### A. Testes Rápidos e Determinísticos (Custo Zero)
 ```bash
 cd nextjs-teste-fluentes
-# Testes locais de regressão e escopo RAG em PDF
+# Smoke Test rápido (11 casos essenciais das 7 categorias em ~15s)
 python3 tests/suite_test_chat.py
+
+# Regressão Completa (11 casos + 50 perguntas do golden_dataset.json em ~1min)
+python3 tests/suite_test_chat.py --full
 ```
 
 ### B. Testes Qualitativos Semânticos (DeepEval + Gemini Juiz)
