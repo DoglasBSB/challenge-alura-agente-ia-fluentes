@@ -108,7 +108,7 @@ stateDiagram-v2
 
 | Risco de Produto / Negócio | Severidade | Impacto | Estratégia de Mitigação de QA |
 |---|---|---|---|
-| **Alucinação de Prazos de Reembolso:** Assistente informar prazos errados (ex: 30 dias) induzindo o aluno a erro jurídico. | Alto | Alto | Testar com a suíte `docs/suite_test_chat.py` (CT-RAG-01) e DeepEval (`test_faithfulness.py`). |
+| **Alucinação de Prazos de Reembolso:** Assistente informar prazos errados (ex: 30 dias) induzindo o aluno a erro jurídico. | Alto | Alto | Testar com a suíte `tests/suite_test_chat.py` (CT-RAG-01) e DeepEval (`test_faithfulness.py`). |
 | **Vazamento do System Prompt (Data Leakage):** Revelação das instruções confidenciais do sistema para o usuário. | Alto | Alto | Executar testes automatizados de injeção direta (`test_data_leakage.py` e audit do Garak). |
 | **Adoção de Persona Não Autorizada (Jailbreak):** Assistente aceitar comando para agir como pirata ou linguagem imprópria. | Alto | Alto | Validar os guardrails na API (`test_prompt_injection.py` e CT-SEG-01). |
 | **Esgotamento de Cota de API Externa (Rate Limit):** Travamento do chat quando a cota gratuita do Gemini expirar. | Médio | Alto | Implementação e teste do fallback automático transparente para o Ollama local (`llama3.2`). |
@@ -166,7 +166,7 @@ stateDiagram-v2
 | **Red Teaming (Garak)** | ~500 variações de ataque | ~5 minutos | R$ 0,00 (Ollama) |
 
 ### 7.2 Próximos Passos Recomendados
-1. Manter a execução diária da regressão rápida `python3 docs/suite_test_chat.py`.
+1. Manter a execução diária da regressão rápida `python3 tests/suite_test_chat.py`.
 2. Executar `python3 qa/relatorio_consolidado.py` após rodar as suítes para atualização do Dashboard HTML.
 3. Monitorar os limites de cota da Google AI Studio para alternância transparente com o Ollama local.
 

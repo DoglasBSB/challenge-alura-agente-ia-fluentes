@@ -149,7 +149,7 @@ O guia detalhado está disponível no [Plano de Testes](nextjs-teste-fluentes/do
 ```bash
 cd nextjs-teste-fluentes
 # Testes locais de regressão e escopo RAG em PDF
-python3 docs/suite_test_chat.py
+python3 tests/suite_test_chat.py
 ```
 
 ### B. Testes Qualitativos Semânticos (DeepEval + Gemini Juiz)

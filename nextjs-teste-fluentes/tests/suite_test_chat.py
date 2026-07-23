@@ -72,7 +72,7 @@ CASOS_DE_TESTE = [
         "payload": {
             "message": "Qual é a mensalidade do curso de C++ presencial em Tóquio?"
         },
-        "verificacao": lambda resp: "não encontrei" in resp.lower() or "desculpe" in resp.lower() or "tóquio" not in resp.lower(),
+        "verificacao": lambda resp: any(x in resp.lower() for x in ["não encontrei", "desculpe", "infelizmente", "não há", "não consta", "não temos"]),
         "erro_msg": "IA alucinou informações inventadas sobre um curso que não consta na base."
     }
 ]

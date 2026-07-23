@@ -12,7 +12,7 @@ Este guia fornece os comandos rápidos para execução de cada suíte de testes 
 ### A. Regressão Rápida da API (Custo Zero - ~15s)
 ```bash
 cd nextjs-teste-fluentes
-python3 docs/suite_test_chat.py
+python3 tests/suite_test_chat.py
 ```
 *Gera:* `relatorios/suite_test_chat_results.json`
 
@@ -61,4 +61,4 @@ cd nextjs-teste-fluentes
 python3 qa/relatorio_consolidado.py
 ```
 
-- **Dashboard HTML Consolidado:** [`relatorios/qa_llm_report.html`](file:///home/doglas/Documentos/QA/Projects/Challenge%20AluraAgente%20-%20IA%20Fluentes/nextjs-teste-fluentes/relatorios/qa_llm_report.html) (abra no navegador).
+- **Dashboard HTML Consolidado:** [`relatorios/qa_llm_report.html`](abra no navegador).
