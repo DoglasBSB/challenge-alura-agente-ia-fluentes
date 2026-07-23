@@ -1,83 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { type SanityDocument } from "next-sanity";
-import { client } from "../sanity/client";
-import { createImageUrlBuilder } from "@sanity/image-url";
 import { CURSOS } from "../data/landingData";
 
-const { projectId, dataset } = client.config();
-const urlFor = (source: any) =>
-  projectId && dataset
-    ? createImageUrlBuilder({ projectId, dataset }).image(source)
-    : null;
+export default function CursosGrid() {
+  const [activeCategory, setActiveCategory] = useState<"todos" | "tecnologia" | "ia" | "preparatorio">("todos");
 
-interface CursosGridProps {
-  cursosIniciais?: SanityDocument[];
-}
-
-export default function CursosGrid({ cursosIniciais }: CursosGridProps) {
-  const [activeCategory, setActiveCategory] = useState<"todos" | "ingles" | "outros" | "preparatorio">("todos");
-
-  // Mapeia os cursos dinâmicos do Sanity ou cai no fallback estático caso a base esteja vazia
-  const cursosParaRenderizar = cursosIniciais && cursosIniciais.length > 0
-    ? cursosIniciais.map((c) => {
-        const lang = c.language || "Inglês";
-        const title = c.title || "Curso Sem Nome";
-        const desc = c.description || "";
-        const nivel = c.level || "Iniciante";
-        
-        // Mapeamento dinâmico de categorias para o filtro
-        const titleLower = title.toLowerCase();
-        const langLower = lang.toLowerCase();
-        let categoria: "ingles" | "outros" | "preparatorio" = "outros";
-        if (titleLower.includes("toefl") || titleLower.includes("ielts") || titleLower.includes("prepar")) {
-          categoria = "preparatorio";
-        } else if (langLower.includes("ingl") || langLower.includes("engl")) {
-          categoria = "ingles";
-        }
-        
-        // Mapeamento dinâmico de gradientes estéticos com base no idioma
-        let gradiente = "from-slate-700 to-zinc-900";
-        if (langLower.includes("ingl") || langLower.includes("engl")) {
-          gradiente = "from-indigo-500 to-purple-600";
-        } else if (langLower.includes("espan") || langLower.includes("span")) {
-          gradiente = "from-orange-500 to-amber-600";
-        } else if (langLower.includes("fran") || langLower.includes("fren")) {
-          gradiente = "from-sky-500 to-blue-600";
-        } else if (langLower.includes("ital")) {
-          gradiente = "from-emerald-500 to-teal-600";
-        } else if (langLower.includes("alem") || langLower.includes("germ")) {
-          gradiente = "from-red-500 to-orange-600";
-        } else if (langLower.includes("japo") || langLower.includes("japa") || langLower.includes("core") || langLower.includes("kore")) {
-          gradiente = "from-violet-500 to-fuchsia-600";
-        }
-
-        const imgUrl = c.image ? urlFor(c.image)?.width(400).height(225).url() : null;
-
-        return {
-          id: c._id,
-          titulo: title,
-          idioma: lang,
-          nivel: nivel,
-          descricao: desc,
-          imagemUrl: imgUrl,
-          gradiente: gradiente,
-          categoria: categoria,
-        };
-      })
-    : CURSOS.map(c => ({
-        id: c.id,
-        titulo: c.titulo,
-        idioma: c.idioma,
-        nivel: c.nivel,
-        descricao: c.descricao,
-        imagemUrl: null,
-        gradiente: c.imagem,
-        categoria: c.categoria
-      }));
-
-  const filteredCursos = cursosParaRenderizar.filter((curso) => {
+  const filteredCursos = CURSOS.filter((curso) => {
     if (activeCategory === "todos") return true;
     return curso.categoria === activeCategory;
   });
@@ -85,7 +14,7 @@ export default function CursosGrid({ cursosIniciais }: CursosGridProps) {
   const handleSaibaMais = (cursoTitulo: string) => {
     if (typeof window !== "undefined") {
       const event = new CustomEvent("open-assistant-chat", {
-        detail: { message: `Quero saber mais detalhes e valores sobre o curso "${cursoTitulo}".` },
+        detail: { message: `Quero saber mais detalhes sobre o curso "${cursoTitulo}" e como funciona a emissão de certificado.` },
       });
       window.dispatchEvent(event);
     }
@@ -96,20 +25,20 @@ export default function CursosGrid({ cursosIniciais }: CursosGridProps) {
       <div className="container mx-auto max-w-5xl px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-4 text-zinc-900 dark:text-zinc-50">
-            Nossos Cursos de Idiomas
+            Nossos Cursos de Tecnologia & IA
           </h2>
           <p className="text-zinc-600 dark:text-zinc-400 max-w-lg mx-auto">
-            Projetados para atender às suas necessidades, do absoluto básico à fluência para o mercado de trabalho internacional.
+            Projetados para capacitar você do básico da programação ao desenvolvimento de Agentes de IA e RAG.
           </p>
         </div>
 
         {/* Filtros */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
           {[
-            { id: "todos", label: "Todos os Idiomas" },
-            { id: "ingles", label: "Cursos de Inglês" },
-            { id: "outros", label: "Outros Idiomas" },
-            { id: "preparatorio", label: "Preparatórios" },
+            { id: "todos", label: "Todos os Cursos" },
+            { id: "tecnologia", label: "Programação & Lógica" },
+            { id: "ia", label: "IA & RAG" },
+            { id: "preparatorio", label: "Agentes & Cloud" },
           ].map((cat) => (
             <button
               key={cat.id}
@@ -133,18 +62,9 @@ export default function CursosGrid({ cursosIniciais }: CursosGridProps) {
               className="group relative flex flex-col justify-between rounded-2xl border border-zinc-200/60 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div>
-                {/* Imagem / Indicador de Idioma */}
-                <div className={`w-full h-36 rounded-xl p-4 flex flex-col justify-between text-white mb-6 shadow-inner relative overflow-hidden bg-gradient-to-tr ${curso.gradiente}`}>
-                  {curso.imagemUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={curso.imagemUrl}
-                      alt={curso.titulo}
-                      className="absolute inset-0 w-full h-full object-cover -z-10 transition-transform duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-black/10 mix-blend-overlay -z-10" />
-                  )}
+                {/* Indicador de Curso */}
+                <div className={`w-full h-36 rounded-xl p-4 flex flex-col justify-between text-white mb-6 shadow-inner relative overflow-hidden bg-gradient-to-tr ${curso.imagem}`}>
+                  <div className="absolute inset-0 bg-black/10 mix-blend-overlay -z-10" />
                   <div className="flex items-center justify-between z-10">
                     <span className="text-[10px] font-bold tracking-wider uppercase bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full">
                       {curso.idioma}
@@ -168,7 +88,7 @@ export default function CursosGrid({ cursosIniciais }: CursosGridProps) {
                 onClick={() => handleSaibaMais(curso.titulo)}
                 className="w-full text-center py-2.5 rounded-xl text-xs font-bold border border-zinc-200 dark:border-zinc-800 hover:border-indigo-500/50 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 text-zinc-800 dark:text-zinc-200 dark:hover:text-indigo-400 hover:text-indigo-600 transition-all cursor-pointer"
               >
-                Saiba mais com IA
+                Tirar Dúvidas com o Assistente IA
               </button>
             </div>
           ))}

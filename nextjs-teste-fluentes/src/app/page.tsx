@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { type SanityDocument } from "next-sanity";
-import { client } from "./sanity/client";
 import OpenChatButton from "./components/OpenChatButton";
 import CursosGrid from "./components/CursosGrid";
 import IaInteractiveSection from "./components/IaInteractiveSection";
@@ -10,25 +8,11 @@ import CtaButton from "./components/CtaButton";
 import FooterIaLink from "./components/FooterIaLink";
 
 export const metadata: Metadata = {
-  title: "Aprenda Inglês com IA | IA Fluentes",
-  description: "Aprenda idiomas mais rápido com metodologia moderna, conversação ativa e assistência inteligente 24h.",
+  title: "IA Fluentes | Escola Online de Tecnologia & IA",
+  description: "Aprenda Programação, Engenharia de Prompt e RAG com metodologia prática e assistente de IA 24h.",
 };
 
-const CURSOS_ATIVOS_QUERY = `*[
-  _type == "Cursos"
-  && (!defined(startDate) || startDate <= now())
-  && (!defined(endDate) || endDate >= now())
-]|order(publishedAt desc)`;
-
-const options = { next: { revalidate: 30 } };
-
-export default async function IndexPage() {
-  const cursosSanity = await client.fetch<SanityDocument[]>(
-    CURSOS_ATIVOS_QUERY,
-    {},
-    options
-  ).catch(() => []);
-
+export default function IndexPage() {
   return (
     <div className="flex-1 text-zinc-900 dark:text-zinc-100 selection:bg-indigo-500 selection:text-white">
       {/* Decorações de fundo */}
@@ -41,18 +25,18 @@ export default async function IndexPage() {
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-100/50 dark:border-indigo-900/30 backdrop-blur-md mb-6">
             <span className="flex h-2 w-2 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-pulse" />
-            Metodologia Fluentes IA
+            Plataforma Educativa IA Fluentes
           </div>
           
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] mb-6">
-            Aprenda Varios Idiomas com{" "}
+            Aprenda Tecnologia & IA com{" "}
             <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600 dark:from-indigo-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              Inteligência Artificial
+              Assistência Inteligente
             </span>
           </h1>
           
           <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-8 max-w-xl leading-relaxed">
-            Descubra uma nova forma de alcançar a fluência. Aulas dinâmicas, suporte personalizado e nosso assistente virtual integrado disponível 24 horas para tirar suas dúvidas.
+            Formação prática em Inteligência Artificial, RAG e Programação. Tire dúvidas sobre matrículas, regulamento, reembolsos e certificados com nosso Assistente de IA.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
@@ -71,23 +55,17 @@ export default async function IndexPage() {
       <section className="py-20 bg-zinc-55/30 dark:bg-zinc-900/20 border-t border-zinc-200/60 dark:border-zinc-800/60">
         <div className="container mx-auto max-w-5xl px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-black tracking-tight mb-4">Por que escolher a nossa escola?</h2>
+            <h2 className="text-3xl font-black tracking-tight mb-4">Por que escolher a IA Fluentes?</h2>
             <p className="text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
-              Combinamos a melhor infraestrutura educacional com inovação digital para acelerar seu aprendizado.
+              Combinamos ensino de alto nível com um ecossistema completo de suporte ao estudante.
             </p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
-                title: "Professores Especializados",
-                desc: "Aulas com professores nativos e certificados na área de ensino de idiomas.",
-                icon: "M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25",
-              },
-              {
-                title: "Material Digital Completo",
-                desc: "Acesso a e-books, exercícios interativos e audiobooks sem custo adicional.",
-                icon: "M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25", // Placeholder icon, will replace
+                title: "Instrutores Atuantes",
+                desc: "Aulas com profissionais de mercado especializados em IA, Data Science e Cloud.",
                 isCustomIcon: true,
                 svg: (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-indigo-500">
@@ -96,8 +74,18 @@ export default async function IndexPage() {
                 )
               },
               {
-                title: "Certificado de Conclusão",
-                desc: "Certificados digitais alinhados ao quadro europeu comum de línguas.",
+                title: "Material Prático Completo",
+                desc: "Repositórios no GitHub, arquivos de dados e notebooks interativos para praticar.",
+                isCustomIcon: true,
+                svg: (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-indigo-500">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                  </svg>
+                )
+              },
+              {
+                title: "Certificados com QR Code",
+                desc: "Certificados digitais com verificação de autenticidade e carga horária detalhada.",
                 isCustomIcon: true,
                 svg: (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-indigo-500">
@@ -106,12 +94,12 @@ export default async function IndexPage() {
                 )
               },
               {
-                title: "Aulas Online & Presenciais",
-                desc: "Escolha o formato que melhor se adapta à sua rotina e preferências.",
+                title: "Garantia de 7 Dias",
+                desc: "Garantia incondicional de reembolso total dentro de 7 dias após a matrícula.",
                 isCustomIcon: true,
                 svg: (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-indigo-500">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25M19.5 3H4.5A1.5 1.5 0 0 0 3 4.5v10.5A1.5 1.5 0 0 0 4.5 16.5h15a1.5 1.5 0 0 0 1.5-1.5V4.5A1.5 1.5 0 0 0 19.5 3Z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                   </svg>
                 )
               },
@@ -121,11 +109,7 @@ export default async function IndexPage() {
                 className="rounded-2xl border border-zinc-200/60 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 p-6 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 flex items-center justify-center mb-4">
-                  {ben.isCustomIcon ? ben.svg : (
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-indigo-500">
-                      <path strokeLinecap="round" strokeLinejoin="round" d={ben.icon} />
-                    </svg>
-                  )}
+                  {ben.svg}
                 </div>
                 <h3 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 mb-2">{ben.title}</h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{ben.desc}</p>
@@ -135,38 +119,37 @@ export default async function IndexPage() {
         </div>
       </section>
 
-      {/* 3. SEÇÃO CURSOS DE IDIOMAS */}
-      <CursosGrid cursosIniciais={cursosSanity} />
+      {/* 3. SEÇÃO CURSOS */}
+      <CursosGrid />
 
-      {/* 4. SEÇÃO COMO FUNCIONA (TIMELINE) */}
+      {/* 4. SEÇÃO COMO FUNCIONA */}
       <section className="py-20">
         <div className="container mx-auto max-w-4xl px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-black tracking-tight mb-4">Como Funciona o Método</h2>
+            <h2 className="text-3xl font-black tracking-tight mb-4">Como Funciona o Atendimento ao Aluno</h2>
             <p className="text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
-              Três etapas simples para conectar seus objetivos com a melhor recomendação e começar a estudar.
+              Três passos simples para tirar suas dúvidas com o nosso Assistente de IA baseado em RAG.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 relative">
-            {/* Conector Linha (oculto em mobile) */}
             <div className="hidden md:block absolute top-[52px] left-[15%] right-[15%] h-[2px] bg-indigo-100 dark:bg-indigo-900 -z-10" />
 
             {[
               {
                 step: "1",
-                title: "Escolha o Idioma",
-                desc: "Selecione o idioma que deseja aprender e seus objetivos de vida ou profissionais.",
+                title: "Abra o Chat de IA",
+                desc: "Clique no ícone de assistente virtual no canto inferior direito da tela.",
               },
               {
                 step: "2",
-                title: "Consulte a IA",
-                desc: "Converse com o Assistente IA para identificar seu perfil de estudos e nivelamento.",
+                title: "Faça sua Pergunta",
+                desc: "Pergunte sobre regulamento, reembolsos, certificados, bolsas ou ementas.",
               },
               {
                 step: "3",
-                title: "Matricule-se & Comece",
-                desc: "Receba a recomendação de curso exata para você e dê início à sua jornada rumo à fluência.",
+                title: "Receba Respostas Claras",
+                desc: "O agente consulta a base de conhecimento e responde com precisão e segurança.",
               },
             ].map((step, idx) => (
               <div key={idx} className="flex flex-col items-center text-center px-4">
@@ -190,20 +173,19 @@ export default async function IndexPage() {
       <section className="py-20 bg-zinc-100/50 dark:bg-zinc-950/30 border-y border-zinc-200/55 dark:border-zinc-900/50">
         <div className="container mx-auto max-w-5xl px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-black tracking-tight mb-4">Histórias de Sucesso</h2>
+            <h2 className="text-3xl font-black tracking-tight mb-4">Histórias dos Nossos Alunos</h2>
             <p className="text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
-              Veja o depoimento de alunos reais que alcançaram a fluência através de nossa metodologia de IA.
+              Veja depoimentos de quem já estuda conosco e transformou a carreira em tecnologia.
             </p>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {DEPOIMENTOS.map((dep) => (
               <div
                 key={dep.id}
                 className="rounded-2xl border border-zinc-200/60 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-sm flex flex-col justify-between"
               >
                 <div>
-                  {/* Estrelas */}
                   <div className="flex gap-0.5 text-amber-500 mb-4">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <svg
@@ -243,14 +225,14 @@ export default async function IndexPage() {
       {/* 7. SEÇÃO FAQ */}
       <FaqSection />
 
-      {/* 9. SEÇÃO CHAMADA FINAL (CTA) */}
+      {/* 8. SEÇÃO CHAMADA FINAL (CTA) */}
       <section className="container mx-auto max-w-5xl px-6 py-8">
         <div className="bg-gradient-to-br from-indigo-600 to-violet-700 text-white rounded-3xl p-12 text-center shadow-xl relative overflow-hidden">
           <div className="absolute inset-0 bg-black/5" />
           <div className="relative z-10 max-w-xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black mb-4">Comece hoje sua jornada em um novo idioma</h2>
+            <h2 className="text-3xl sm:text-4xl font-black mb-4">Tem dúvidas sobre a escola?</h2>
             <p className="text-indigo-100 text-sm mb-8">
-              Aproveite nossa estrutura flexível e o assistente de inteligência artificial 24h para decolar a sua fluência. Fale agora com a nossa IA!
+              Pergunte ao nosso Assistente de IA sobre regulamento, reembolsos, certificados, bolsas ou cursos!
             </p>
             <CtaButton />
           </div>
@@ -264,7 +246,7 @@ export default async function IndexPage() {
             <div>
               <h4 className="font-bold text-sm mb-3">IA Fluentes</h4>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Escola de idiomas de alta conversão integrada com Inteligência Artificial para guiar cada aluno no seu ritmo e tempo.
+                Plataforma educativa com assistente conversacional integrado para atendimento a estudantes.
               </p>
             </div>
             <div>
@@ -277,24 +259,22 @@ export default async function IndexPage() {
             <div>
               <h4 className="font-bold text-sm mb-3">Redes Sociais</h4>
               <ul className="space-y-2 text-xs text-zinc-650 dark:text-zinc-400">
-                <li><a href="#" className="hover:text-indigo-500">Instagram</a></li>
+                <li><a href="#" className="hover:text-indigo-500">GitHub</a></li>
                 <li><a href="#" className="hover:text-indigo-500">LinkedIn</a></li>
-                <li><a href="#" className="hover:text-indigo-500">YouTube</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold text-sm mb-3">Contato</h4>
               <ul className="space-y-2 text-xs text-zinc-500 dark:text-zinc-400">
-                <li>Email: contato@iafluentes.com.br</li>
-                <li>WhatsApp: (11) 99999-9999</li>
-                <li>Horários: Seg a Sáb - 08h às 20h</li>
+                <li>Email: suporte@iafluentes.com.br</li>
+                <li>Atendimento: Assistente Virtual 24h</li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-zinc-100 dark:border-zinc-800 pt-8 text-center text-xs text-zinc-500 dark:text-zinc-400">
-            <p>© 2026 IA Fluentes - Todos os direitos reservados. POC de Idiomas & Assistente Chat LLM.</p>
-            <p className="mt-1">Construído com Next.js 16 + Tailwind CSS v4 + Sanity Studio + Ollama.</p>
+            <p>© 2026 IA Fluentes - Desafio Alura Agent. Todos os direitos reservados.</p>
+            <p className="mt-1">Construído com Next.js 15 + Tailwind CSS + CSV RAG + LLM (Gemini/Ollama).</p>
           </div>
         </div>
       </footer>
