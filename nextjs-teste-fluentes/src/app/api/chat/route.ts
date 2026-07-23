@@ -296,7 +296,7 @@ export async function GET() {
   const hasGeminiKey = Boolean(GOOGLE_API_KEY && GOOGLE_API_KEY.trim().length > 0);
   return NextResponse.json({
     status: "ok",
-    fonte_dados: "Base de Conhecimento Oficial (data/)",
+    fonte_dados: "Base de Conhecimento Oficial",
     gemini_ativo: hasGeminiKey,
     modelo_padrao: hasGeminiKey ? "gemini-2.5-flash" : MODELO,
   });
