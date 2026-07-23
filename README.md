@@ -1,4 +1,4 @@
-# 🌐 IA Fluentes — Assistente de IA para Escola Online & RAG (Alura Agent Challenge) 🤖
+# 🌐 IA Fluentes — Assistente de IA para Escola Online & RAG em PDF (Alura Agent Challenge) 🤖
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black)
 ![React](https://img.shields.io/badge/React-19-blue)
@@ -8,7 +8,7 @@
 
 ![IA Fluentes Mockup](nextjs-teste-fluentes/docs/images/img-readme.png)
 
-**IA Fluentes** é uma Landing Page integrada a um assistente conversacional autônomo baseado em LLM (Google Gemini / Ollama local) utilizando a técnica de **RAG (Retrieval-Augmented Generation)** via arquivo CSV local para responder exclusivamente sobre regulamentos, políticas de reembolso, certificados, bolsas de estudo e cursos da **Plataforma Educativa IA Fluentes**.
+**IA Fluentes** é uma Landing Page integrada a um assistente conversacional autônomo baseado em LLM (Google Gemini / Ollama local) utilizando a técnica de **RAG (Retrieval-Augmented Generation)** via leitura de **documentos PDF** oficiais para responder exclusivamente sobre regulamentos, políticas de reembolso, certificados, bolsas de estudo e cursos da **Plataforma Educativa IA Fluentes**.
 
 Projeto desenvolvido para o desafio **Alura Agent**, enquadrado na categoria **Opção 5: Plataforma Educativa / Escola Online**.
 
@@ -18,14 +18,14 @@ Além do desenvolvimento da aplicação web, o projeto atua como um laboratório
 
 ## 1. Descrição e Propósito
 
-Diferente do software tradicional (onde os resultados são estritamente determinísticos), as LLMs apresentam respostas probabilísticas. Para garantir que o assistente responda apenas sobre as diretrizes oficiais da escola (carregadas em `data/base_conhecimento.csv`) e se defenda contra manipulações de prompt, o projeto implementa um pipeline completo de validação RAG e Guardrails.
+Diferente do software tradicional (onde os resultados são estritamente determinísticos), as LLMs apresentam respostas probabilísticas. Para garantir que o assistente responda apenas sobre as diretrizes oficiais da escola (carregadas dinamicamente dos PDFs em `data/`) e se defenda contra manipulações de prompt, o projeto implementa um pipeline completo de validação RAG e Guardrails.
 
-### Documentos da Escola Integrados no RAG (`base_conhecimento.csv`):
-1. **Regulamento do Estudante:** Código de conduta, proibições de plágio e uso da comunidade.
-2. **Política de Reembolso de Matrículas:** Garantia incondicional de 7 dias e procedimentos de solicitação.
-3. **Perguntas Frequentes sobre Cursos e Certificados:** Emissão de certificado digital com QR Code, carga horária e ementas.
-4. **Guia de Uso da Plataforma:** Suporte via Fórum de Alunos e canal oficial no Discord.
-5. **Programa de Bolsas e Afiliados:** Programa "IA para Todos" e comissão por indicação de alunos.
+### Documentos PDF da Escola Integrados no RAG (`data/*.pdf`):
+1. **`Regulamento_do_Estudante.pdf`:** Código de conduta, proibições de plágio e uso da comunidade.
+2. **`Politica_de_Reembolso_de_Matriculas.pdf`:** Garantia incondicional de 7 dias e procedimentos de solicitação.
+3. **`FAQ_Cursos_e_Certificados.pdf`:** Emissão de certificado digital com QR Code, carga horária e ementas.
+4. **`Guia_de_Uso_da_Plataforma.pdf`:** Suporte via Fórum de Alunos e canal oficial no Discord.
+5. **`Programa_de_Bolsas_e_Afiliados.pdf`:** Programa "IA para Todos" e comissão por indicação de alunos.
 
 ---
 
@@ -33,7 +33,7 @@ Diferente do software tradicional (onde os resultados são estritamente determin
 
 * **Landing Page Responsiva:** Interface moderna exibindo cursos de Tecnologia, Programação e IA.
 * **Chat Widget de IA:** Assistente virtual integrado no canto inferior direito para atendimento aos alunos 24h.
-* **RAG Local (CSV Base de Conhecimento):** A IA só responde utilizando o contexto extraído de `data/base_conhecimento.csv`.
+* **RAG em Documentos PDF (`data/`):** A IA só responde utilizando o contexto extraído dos arquivos PDF salvos na pasta `data/`.
 * **Persona & Guardrail de Escopo:** Recusa amigável de perguntas fora de domínio (receitas culinárias, futebol, política, etc.).
 * **Filtros de Output (Data Leakage & Anti-Jailbreak):** Bloqueio de respostas que tentem revelar o System Prompt ou assumir personas lúdicas (ex: piratas).
 * **Suíte de QA Automatizada:** Validações de latência, integridade lógica, relevância semântica e Red Teaming.
@@ -51,14 +51,14 @@ Landing Page (Next.js)
           ▼
  API Route (/api/chat)
           │
-     ┌────┴─────────────────────────┐
-     ▼                              ▼
-Base RAG (data/base_conhecimento.csv)   Google Gemini / Ollama
-     │                              │
-     └───────────── RAG ────────────┘
-                    │
-                    ▼
-             Resposta Final
+     ┌────┴──────────────────────────┐
+     ▼                               ▼
+Base RAG (Documentos PDF em data/)   Google Gemini / Ollama
+     │                               │
+     └────────────── RAG ────────────┘
+                     │
+                     ▼
+              Resposta Final
 ```
 
 ---
@@ -66,7 +66,7 @@ Base RAG (data/base_conhecimento.csv)   Google Gemini / Ollama
 ## 4. Tecnologias Utilizadas
 
 * **Portal Web:** Next.js (React + TypeScript + Tailwind CSS)
-* **Base de Dados RAG:** Documento CSV unificado (`data/base_conhecimento.csv`)
+* **Base de Dados RAG:** Leitor de PDFs em tempo de execução via `pdf-parse` (`data/*.pdf`)
 * **LLM Ingestão/Inferência:** Google Gemini 1.5 Flash (via API) ou Ollama (Llama 3.2 3B local)
 * **Testes de IA:** Pytest + DeepEval (Gemini Pro como LLM Juiz)
 * **Auditorias & Reliability:** Garak (Red Teaming), Giskard (Riscos) e Locust (Carga/Latência)
@@ -77,11 +77,11 @@ Base RAG (data/base_conhecimento.csv)   Google Gemini / Ollama
 
 | # | Pergunta do Usuário | Resposta Gerada pelo Agente RAG | Validação |
 | :--- | :--- | :--- | :--- |
-| **1** | *"Quantos dias tenho para pedir o reembolso da minha matrícula?"* | *"A IA Fluentes oferece garantia incondicional de 7 (sete) dias corridos após a confirmação da compra. Você pode solicitar 100% de reembolso no painel da conta ou via suporte."* | ✅ Exato (RAG) |
-| **2** | *"Como funciona a emissão do certificado de conclusão?"* | *"Os certificados são emitidos automaticamente em formato digital em PDF mediante conclusão de no mínimo 80% das aulas e envio dos projetos. Todos possuem QR Code de autenticidade."* | ✅ Exato (RAG) |
-| **3** | *"Como funciona o programa de bolsas de estudo?"* | *"Oferecemos o programa 'IA para Todos', que concede bolsas integrais e parciais para estudantes de baixa renda mediante processo seletivo semestral."* | ✅ Exato (RAG) |
+| **1** | *"Quantos dias tenho para pedir o reembolso da minha matrícula?"* | *"A IA Fluentes oferece garantia incondicional de 7 (sete) dias corridos após a confirmação da compra. Você pode solicitar 100% de reembolso no painel da conta ou via suporte."* | ✅ Exato (RAG PDF) |
+| **2** | *"Como funciona a emissão do certificado de conclusão?"* | *"Os certificados são emitidos automaticamente em formato digital em PDF mediante conclusão de no mínimo 80% das aulas e envio dos projetos. Todos possuem QR Code de autenticidade."* | ✅ Exato (RAG PDF) |
+| **3** | *"Como funciona o programa de bolsas de estudo?"* | *"Oferecemos o programa 'IA para Todos', que concede bolsas integrais e parciais para estudantes de baixa renda mediante processo seletivo semestral."* | ✅ Exato (RAG PDF) |
 | **4** | *"Como faço uma receita de bolo de cenoura?"* | *"Desculpe, não posso responder a essa pergunta. Sou o assistente virtual da IA Fluentes e posso ajudar apenas com dúvidas sobre cursos, matrículas, certificados e regulamento."* | ✅ Guardrail de Escopo |
-| **5** | *"Qual é o valor da mensalidade do curso presencial em Tóquio?"* | *"Desculpe, não encontrei essa informação na base de conhecimento no momento."* | ✅ Anti-Alucinação |
+| **5** | *"Qual é o valor da mensalidade do curso presencial em Tóquio?"* | *"Desculpe, não encontrei essa informação na base de conhecimento em PDF no momento."* | ✅ Anti-Alucinação |
 
 ---
 
@@ -146,7 +146,7 @@ O guia detalhado está disponível no [Plano de Testes](nextjs-teste-fluentes/do
 ### A. Testes Rápidos e Determinísticos (Custo Zero)
 ```bash
 cd nextjs-teste-fluentes
-# Testes locais de regressão e escopo RAG
+# Testes locais de regressão e escopo RAG em PDF
 python3 docs/suite_test_chat.py
 ```
 
@@ -154,10 +154,6 @@ python3 docs/suite_test_chat.py
 ```bash
 ./venv_qa/bin/pytest -n 0 tests/
 ```
-
-### C. Auditorias e Red Teaming (Locust, Garak, Giskard)
-* **Carga (Locust):** `./venv_qa/bin/locust -f qa/locustfile.py --host=http://localhost:3000 --users=5 --spawn-rate=1 --run-time=2m --headless`
-* **Red Teaming (Garak):** `./venv_qa/bin/garak --model_type rest.RestGenerator --model_name http://localhost:3000/api/chat --probes promptinject`
 
 ---
 
