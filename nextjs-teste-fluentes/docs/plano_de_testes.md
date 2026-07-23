@@ -18,15 +18,14 @@ Garantir a qualidade funcional, não-funcional, segurança e qualidade das respo
 
 ## 2. 🔍 Escopo de Testes
 
-### 2.1 In Scope (Dentro do Escopo)
-- **Fidelidade RAG & Base em PDF (Read):** Leitura e consumo dos 5 documentos PDF salvos em `data/` (`Regulamento_do_Estudante.pdf`, `Politica_de_Reembolso_de_Matriculas.pdf`, `FAQ_Cursos_e_Certificados.pdf`, `Guia_de_Uso_da_Plataforma.pdf`, `Programa_de_Bolsas_e_Afiliados.pdf`).
-- **Validação dos 10 Cursos:** Cobertura de dúvidas sobre ementas, certificados, turmas ao vivo e pré-requisitos dos 10 cursos oficiais de idiomas da plataforma.
-- **Qualidade Semântica da IA (DeepEval):** Métricas de Fidelidade Factual (`Faithfulness`), Relevância da Resposta (`AnswerRelevancy`) e Anti-Alucinação (`HallucinationMetric`).
-- **Persona & Escopo (Guardrails):** Garantia de tom cortês e profissional do assistente e recusa amigável de temas fora do escopo da escola (receitas culinárias, futebol, piadas, política).
-- **Segurança (Red Teaming & Anti-Jailbreak):** Bloqueio de injeções diretas de prompt (override de persona como pirata), engenharia social e vazamento de instruções internas do sistema (`Data Leakage`).
-- **Robustez Técnica:** Resiliência da API contra requisições malformadas, HTTP 400 em mensagens vazias, sanitização Anti-XSS (`<script>`), SQL Injection fictício e payloads extensos.
-- **Desempenho & Carga (Locust):** Medição de throughput e latência (p95/p99) sob usuários concorrentes na API do Next.js.
-- **Varredura Automatizada de Riscos (Giskard & Garak):** Scan de segurança da NVIDIA (Garak) e mapeamento de riscos regulatórios (Giskard).
+### 2.1 In Scope (Estrutura em 7 Categorias Lógicas de QA)
+- **1. Escopo & Guardrail (`GRD`):** Recusa amigável de temas fora do domínio (receitas culinárias, futebol, política) com pergunta CTA ativa e resistência a role-plays disfarçados.
+- **2. Fidelidade Factual & RAG (`QUA`):** Validação estrita aos 5 PDFs em `data/`, 10 cursos de idiomas, reembolso incondicional de 7 dias, frequência de 80% para certificados e ausência de alucinações.
+- **3. Segurança da Informação (`SEC`):** Bloqueio contra Prompt Injection (override de persona), proteção contra vazamento do System Prompt (Data Leakage) e sanitização Anti-XSS.
+- **4. Memória & Conversação (`MEM`):** Manutenção de contexto entre turnos de conversa (multiturn) e isolamento entre sessões.
+- **5. Robustez de Entrada & Tom (`INP`):** Resiliência contra mensagens vazias, emojis, caracteres especiais/nulos e manutenção de tom cortês sob provocação.
+- **6. Formatação de UI & Sigilo Técnico (`UI`):** Formatação limpa em markdown sem exposição de jargões técnicos (proibido citar PDF, RAG, vetores ou embeddings).
+- **7. Desempenho & Latência (`PERF`):** Medição de throughput e latência (p95/p99) sob acessos concorrentes na API do Next.js via Locust.
 
 ### 2.2 Out of Scope (Fora do Escopo)
 - Processamento real de gateway de pagamento bancário ou estorno em faturas de cartão de crédito.
