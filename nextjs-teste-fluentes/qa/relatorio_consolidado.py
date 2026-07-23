@@ -29,7 +29,36 @@ SAIDA = PASTA / "qa_llm_report.html"
 # ── Parsers ──────────────────────────────────────────────────────────────────────
 
 def parse_pytest_resultados(caminho: Path) -> dict:
-    """Lê o JSON gerado pelo conftest.py com todos os resultados pytest agrupados por arquivo."""
+    """Lê o JSON gerado pelo conftest.py ou suite_test_chat com todos os resultados."""
+    caminho_suite = caminho.parent / "suite_test_chat_results.json"
+    if not caminho.exists() and caminho_suite.exists():
+        try:
+            dados = json.loads(caminho_suite.read_text(encoding="utf-8"))
+            casos = dados.get("casos", [])
+            testes = [{
+                "nome": c.get("codigo") + " - " + c.get("nome"),
+                "passou": c.get("passou"),
+                "duracao_s": c.get("latencia_s", 0),
+                "erro": c.get("erro", "")
+            } for c in casos]
+            return {
+                "disponivel": True,
+                "arquivos": {
+                    "suite_test_chat.py": {
+                        "total": dados.get("total", 0),
+                        "passou": dados.get("passou", 0),
+                        "taxa_aprovacao": dados.get("taxa_aprovacao", 0),
+                        "testes": testes
+                    }
+                },
+                "total": dados.get("total", 0),
+                "passou": dados.get("passou", 0),
+                "taxa_aprovacao": dados.get("taxa_aprovacao", 0),
+                "gerado_em": "",
+            }
+        except Exception:
+            return {"disponivel": False}
+
     if not caminho.exists():
         return {"disponivel": False}
     try:

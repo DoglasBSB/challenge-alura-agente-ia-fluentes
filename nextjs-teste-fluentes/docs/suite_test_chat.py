@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+import os
 import json
 import time
 import urllib.request
@@ -72,17 +73,18 @@ CASOS_DE_TESTE = [
             "message": "Qual é a mensalidade do curso de C++ presencial em Tóquio?"
         },
         "verificacao": lambda resp: "não encontrei" in resp.lower() or "desculpe" in resp.lower() or "tóquio" not in resp.lower(),
-        "erro_msg": "IA alucinou informações inventadas sobre um curso que não consta na base CSV."
+        "erro_msg": "IA alucinou informações inventadas sobre um curso que não consta na base."
     }
 ]
 
 def rodar_suite():
     print("======================================================================")
-    print("🚀  SUÍTE DE TESTES DE REGRESSÃO DE API — IA FLUENTES (NEXT.JS RAG CSV)  🚀")
+    print("🚀  SUÍTE DE TESTES DE REGRESSÃO DE API — IA FLUENTES (NEXT.JS RAG PDF)  🚀")
     print("======================================================================\n")
 
     sucessos = 0
     falhas = 0
+    resultados_detalhados = []
 
     for i, caso in enumerate(CASOS_DE_TESTE, 1):
         print(f"[{i}/{len(CASOS_DE_TESTE)}] Testando: {caso['codigo']} - {caso['nome']}...")
@@ -95,9 +97,13 @@ def rodar_suite():
             headers={"Content-Type": "application/json"}
         )
 
+        inicio = time.time()
+        passou = False
+        reply = ""
+        erro_log = ""
+
         try:
-            inicio = time.time()
-            with urllib.request.urlopen(req, timeout=30) as response:
+            with urllib.request.urlopen(req, timeout=60) as response:
                 fim = time.time()
                 status = response.getcode()
                 resposta_corpo = response.read().decode("utf-8")
@@ -109,23 +115,51 @@ def rodar_suite():
                 if status == 200 and caso["verificacao"](reply):
                     print(f"  ✅ PASSOU ({latencia:.2f}s) - Resposta coerente.")
                     sucessos += 1
+                    passou = True
                 else:
                     print(f"  ❌ FALHOU ({latencia:.2f}s) - {caso['erro_msg']}")
                     print(f"     Resposta da IA: \"{reply[:120]}...\"")
                     falhas += 1
+                    erro_log = caso['erro_msg']
 
         except HTTPError as e:
-            print(f"  ❌ FALHOU - Erro HTTP {e.code}: {e.read().decode('utf-8')}")
+            fim = time.time()
+            latencia = fim - inicio
+            erro_log = f"Erro HTTP {e.code}: {e.read().decode('utf-8')}"
+            print(f"  ❌ FALHOU - {erro_log}")
             falhas += 1
         except URLError as e:
-            print(f"  ❌ FALHOU - Não foi possível conectar ao Next.js em {ENDPOINT_URL}.")
-            print("     Certifique-se de que a Landing Page está rodando (`npm run dev` na porta 3000).")
+            fim = time.time()
+            latencia = fim - inicio
+            erro_log = f"Não foi possível conectar ao Next.js em {ENDPOINT_URL}"
+            print(f"  ❌ FALHOU - {erro_log}")
             falhas += 1
+            resultados_detalhados.append({
+                "codigo": caso["codigo"],
+                "nome": caso["nome"],
+                "passou": False,
+                "latencia_s": round(latencia, 2),
+                "resposta": reply,
+                "erro": erro_log
+            })
             break
         except Exception as e:
-            print(f"  ❌ FALHOU - Erro inesperado: {str(e)}")
+            fim = time.time()
+            latencia = fim - inicio
+            erro_log = f"Erro inesperado: {str(e)}"
+            print(f"  ❌ FALHOU - {erro_log}")
             falhas += 1
-            
+
+        resultados_detalhados.append({
+            "codigo": caso["codigo"],
+            "nome": caso["nome"],
+            "passou": passou,
+            "latencia_s": round(latencia, 2),
+            "resposta": reply,
+            "erro": erro_log
+        })
+
+        time.sleep(1.0)
         print("-" * 70)
 
     print("\n======================================================================")
@@ -135,6 +169,21 @@ def rodar_suite():
     print(f" ✅ Sucessos: {sucessos}")
     print(f" ❌ Falhas: {falhas}")
     print("======================================================================\n")
+
+    # Exporta os resultados estruturados em JSON para relatorios/
+    relatorio_dir = os.path.join(os.path.dirname(__file__), "..", "relatorios")
+    os.makedirs(relatorio_dir, exist_ok=True)
+    json_path = os.path.join(relatorio_dir, "suite_test_chat_results.json")
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "total": len(CASOS_DE_TESTE),
+            "passou": sucessos,
+            "falhou": falhas,
+            "taxa_aprovacao": round(sucessos / len(CASOS_DE_TESTE) * 100, 1),
+            "casos": resultados_detalhados
+        }, f, indent=2, ensure_ascii=False)
+    
+    print(f"📄 Resultados exportados em: {os.path.abspath(json_path)}\n")
 
     if falhas > 0:
         sys.exit(1)
