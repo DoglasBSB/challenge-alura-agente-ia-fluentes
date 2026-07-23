@@ -1,4 +1,4 @@
-# 🌐 IA Fluentes — Escola Online de Idiomas & RAG em PDF (Alura Agent Challenge) 🤖
+# 🌐 IA Fluentes — Landing Page & Assistente RAG - Alura Agent Challenge 🤖
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black)
 ![React](https://img.shields.io/badge/React-19-blue)
@@ -12,7 +12,7 @@
 
 ## 1. 📝 Descrição e Propósito
 
-O **IA Fluentes** é um assistente virtual inteligente e uma plataforma web educativa, desenvolvido para o **Alura Agent Challenge** (Opção 5: Plataforma Educativa / Escola Online).
+O **IA Fluentes** é um assistente virtual inteligente e uma plataforma web educativa, desenvolvido para o **Alura Agent Challenge**.
 
 O propósito do sistema é atuar como uma base de conhecimento conversacional centralizada, operando 24/7. Ele foi projetado para responder com **fidelidade factual estrita** às dúvidas de alunos e colaboradores sobre os 10 cursos de idiomas disponíveis, regulamentos acadêmicos, políticas de reembolso, emissão de certificados e programas de bolsas da escola.
 
