@@ -13,8 +13,8 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<{ online: boolean; model: string }>({
-    online: false,
-    model: "",
+    online: true,
+    model: "gemini-1.5-flash",
   });
   const [pendingMessage, setPendingMessage] = useState<string | null>(null);
 
@@ -25,15 +25,17 @@ export default function ChatWidget() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
-  // Verificar status do Ollama ao montar o componente
+  // Verificar status da IA ao montar o componente
   useEffect(() => {
     const checkStatus = async () => {
       try {
         const res = await fetch("/api/chat");
         const data = await res.json();
+        const isOnline = data.status === "ok" || data.gemini_ativo || data.ollama_conectado;
+        const modelName = data.modelo_padrao || data.modelo || (data.gemini_ativo ? "gemini-1.5-flash" : "llama3.2");
         setStatus({
-          online: data.ollama_conectado,
-          model: data.modelo || "",
+          online: Boolean(isOnline),
+          model: modelName,
         });
       } catch {
         setStatus({ online: false, model: "" });
@@ -92,7 +94,7 @@ export default function ChatWidget() {
             ...prev,
             {
               role: "assistant",
-              text: "Erro de conexão. Verifique se o Ollama está rodando localmente na porta 11434.",
+              text: "Erro de conexão com o servidor. Verifique a conexão ou chaves de API.",
             },
           ]);
         } finally {
@@ -100,7 +102,7 @@ export default function ChatWidget() {
         }
       };
 
-      const timeout = setTimeout(sendPending, 400); // Aguarda a transição de abertura
+      const timeout = setTimeout(sendPending, 400);
       return () => clearTimeout(timeout);
     }
   }, [isOpen, pendingMessage]);
@@ -138,7 +140,7 @@ export default function ChatWidget() {
         ...prev,
         {
           role: "assistant",
-          text: "Erro de conexão. Verifique se o Ollama está rodando localmente na porta 11434.",
+          text: "Erro de conexão com o servidor. Verifique a conexão ou chaves de API.",
         },
       ]);
     } finally {
@@ -151,7 +153,7 @@ export default function ChatWidget() {
       {/* Botão Flutuante de Abrir/Fechar */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-indigo-600 to-violet-600 text-white shadow-lg hover:shadow-indigo-500/30 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-indigo-600 to-violet-600 text-white shadow-lg hover:shadow-indigo-500/30 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer"
         aria-label="Abrir chat do assistente"
       >
         {isOpen ? (
@@ -189,8 +191,8 @@ export default function ChatWidget() {
           {/* Cabeçalho */}
           <div className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white p-4 flex items-center justify-between shadow-md">
             <div>
-              <h3 className="font-bold text-sm">Assistente Fluentes</h3>
-              {/* Status do Ollama */}
+              <h3 className="font-bold text-sm">Assistente IA Fluentes</h3>
+              {/* Status da IA */}
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span
                   className={`w-2 h-2 rounded-full ${
@@ -199,14 +201,14 @@ export default function ChatWidget() {
                 />
                 <span className="text-[10px] text-zinc-100 font-medium">
                   {status.online
-                    ? `Ollama Ativo (${status.model})`
-                    : "Ollama desconectado"}
+                    ? `IA Conectada (${status.model || "Gemini"})`
+                    : "IA Desconectada"}
                 </span>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white transition-colors"
+              className="text-white/80 hover:text-white transition-colors cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -242,10 +244,10 @@ export default function ChatWidget() {
                   </svg>
                 </div>
                 <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                  Olá! Eu sou o assistente IA da Fluentes.
+                  Olá! Sou o assistente virtual da IA Fluentes.
                 </p>
                 <p className="text-[11px] mt-1 px-4">
-                  Pergunte-me sobre cursos de idiomas, matrículas, horários de aulas ou valores!
+                  Pergunte-me sobre regulamentos, política de reembolso, certificados, bolsas de estudo ou cursos!
                 </p>
               </div>
             ) : (
@@ -291,13 +293,13 @@ export default function ChatWidget() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Pergunte sobre os cursos ou matrículas..."
+              placeholder="Pergunte sobre regulamento, reembolso, certificados..."
               className="flex-1 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 dark:text-zinc-100"
             />
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 text-white p-2.5 rounded-xl transition-all shadow-md active:scale-95 flex items-center justify-center"
+              className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 text-white p-2.5 rounded-xl transition-all shadow-md active:scale-95 flex items-center justify-center cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

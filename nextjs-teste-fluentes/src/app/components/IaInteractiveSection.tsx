@@ -1,11 +1,11 @@
 "use client";
 
 const SUGGESTIONS = [
-  "Quero aprender inglês para iniciantes.",
-  "Existe curso de idiomas para crianças?",
-  "Quero aprender espanhol para viajar.",
-  "Qual curso prepara para o TOEFL?",
-  "Vocês oferecem certificado de conclusão?",
+  "Quantos dias tenho para pedir o reembolso da matrícula?",
+  "Como funciona a emissão de certificado digital?",
+  "O que o regulamento do estudante fala sobre plágio?",
+  "Como funciona o programa de bolsas de estudos?",
+  "Quais são os cursos de IA e Tecnologia disponíveis?",
 ];
 
 export default function IaInteractiveSection() {
@@ -20,7 +20,6 @@ export default function IaInteractiveSection() {
 
   return (
     <section className="py-20 bg-gradient-to-br from-indigo-900 via-indigo-950 to-violet-950 text-white rounded-3xl overflow-hidden shadow-2xl relative">
-      {/* Background radial effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(120,119,198,0.2),transparent_50%)]" />
       <div className="absolute -bottom-48 -left-48 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
 
@@ -28,19 +27,19 @@ export default function IaInteractiveSection() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold bg-white/10 text-indigo-300 border border-white/10 backdrop-blur-md mb-6">
-              Consultor Inteligente
+              Consultor Inteligente RAG
             </div>
             
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-6 leading-tight">
-              Seu consultor inteligente para aprender um novo idioma
+              Seu assistente inteligente para tirar dúvidas sobre a escola
             </h2>
             
             <p className="text-zinc-300 mb-8 text-base leading-relaxed">
-              Está em dúvida sobre qual idioma escolher, qual é o seu nível atual ou como funcionam os horários? Pergunte diretamente ao nosso Assistente IA! Ele foi treinado para guiar você rumo à fluência.
+              Está em dúvida sobre prazos de reembolso, emissão de certificados, regulamento ou programa de bolsas? Pergunte diretamente ao nosso Assistente de IA baseado em RAG!
             </p>
 
             <button
-              onClick={() => handleSuggestionClick("Olá! Como você pode me ajudar a escolher um curso?")}
+              onClick={() => handleSuggestionClick("Olá! Como você pode me ajudar com dúvidas sobre a escola?")}
               className="px-6 py-3.5 rounded-xl font-bold bg-white text-indigo-950 hover:bg-zinc-100 transition-all shadow-lg active:scale-95 inline-flex items-center gap-2 cursor-pointer"
             >
               <span>Conversar agora</span>
@@ -76,7 +75,7 @@ export default function IaInteractiveSection() {
                   <button
                     key={idx}
                     onClick={() => handleSuggestionClick(suggestion)}
-                    className="w-full text-left p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-indigo-505/30 text-xs text-zinc-200 font-medium transition-all flex items-center justify-between group cursor-pointer"
+                    className="w-full text-left p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-indigo-500/30 text-xs text-zinc-200 font-medium transition-all flex items-center justify-between group cursor-pointer"
                   >
                     <span className="line-clamp-1">{suggestion}</span>
                     <svg
