@@ -7,6 +7,8 @@ interface Message {
   text: string;
 }
 
+const LOCAL_STORAGE_KEY = "ia_fluentes_chat_history";
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -14,11 +16,47 @@ export default function ChatWidget() {
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<{ online: boolean; model: string }>({
     online: true,
-    model: "gemini-1.5-flash",
+    model: "gemini-2.5-flash",
   });
   const [pendingMessage, setPendingMessage] = useState<string | null>(null);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Carregar histórico do localStorage ao inicializar no navegador
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      }
+    } catch (e) {
+      console.error("Erro ao carregar histórico do localStorage:", e);
+    }
+  }, []);
+
+  // Salvar no localStorage sempre que as mensagens forem alteradas
+  useEffect(() => {
+    if (messages.length > 0) {
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages));
+      } catch (e) {
+        console.error("Erro ao salvar histórico no localStorage:", e);
+      }
+    }
+  }, [messages]);
+
+  // Função para limpar o histórico de conversas do localStorage
+  const clearHistory = () => {
+    setMessages([]);
+    try {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    } catch (e) {
+      console.error("Erro ao remover histórico do localStorage:", e);
+    }
+  };
 
   // Auto scroll para a última mensagem
   useEffect(() => {
@@ -32,7 +70,7 @@ export default function ChatWidget() {
         const res = await fetch("/api/chat");
         const data = await res.json();
         const isOnline = data.status === "ok" || data.gemini_ativo || data.ollama_conectado;
-        const modelName = data.modelo_padrao || data.modelo || (data.gemini_ativo ? "gemini-1.5-flash" : "llama3.2");
+        const modelName = data.modelo_padrao || data.modelo || (data.gemini_ativo ? "gemini-2.5-flash" : "llama3.2");
         setStatus({
           online: Boolean(isOnline),
           model: modelName,
@@ -206,21 +244,47 @@ export default function ChatWidget() {
                 </span>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white transition-colors cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-5 h-5"
+            <div className="flex items-center gap-2">
+              {/* Botão de Limpar Histórico do LocalStorage */}
+              {messages.length > 0 && (
+                <button
+                  onClick={clearHistory}
+                  title="Limpar histórico da conversa"
+                  className="text-white/70 hover:text-white transition-colors cursor-pointer p-1 rounded-lg hover:bg-white/10"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.8}
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    />
+                  </svg>
+                </button>
+              )}
+              {/* Botão de Fechar Chat */}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-white/80 hover:text-white transition-colors cursor-pointer p-1 rounded-lg hover:bg-white/10"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* Histórico de Mensagens */}

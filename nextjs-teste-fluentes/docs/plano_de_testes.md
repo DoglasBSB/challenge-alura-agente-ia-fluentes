@@ -22,7 +22,7 @@ Garantir a qualidade funcional, não-funcional, segurança e qualidade das respo
 - **1. Escopo & Guardrail (`GRD`):** Recusa amigável de temas fora do domínio (receitas culinárias, futebol, política) com pergunta CTA ativa e resistência a role-plays disfarçados.
 - **2. Fidelidade Factual & RAG (`QUA`):** Validação estrita aos 5 PDFs em `data/`, 10 cursos de idiomas, reembolso incondicional de 7 dias, frequência de 80% para certificados e ausência de alucinações.
 - **3. Segurança da Informação (`SEC`):** Bloqueio contra Prompt Injection (override de persona), proteção contra vazamento do System Prompt (Data Leakage) e sanitização Anti-XSS.
-- **4. Memória & Conversação (`MEM`):** Manutenção de contexto entre turnos de conversa (multiturn) e isolamento entre sessões.
+- **4. Memória & Conversação (`MEM`):** Manutenção de contexto multiturn e **persistência automática do histórico de conversas no `localStorage` do navegador ao atualizar a página (com opção de limpeza do histórico)**.
 - **5. Robustez de Entrada & Tom (`INP`):** Resiliência contra mensagens vazias, emojis, caracteres especiais/nulos e manutenção de tom cortês sob provocação.
 - **6. Formatação de UI & Sigilo Técnico (`UI`):** Formatação limpa em markdown sem exposição de jargões técnicos (proibido citar PDF, RAG, vetores ou embeddings).
 - **7. Desempenho & Latência (`PERF`):** Medição de throughput e latência (p95/p99) sob acessos concorrentes na API do Next.js via Locust.
