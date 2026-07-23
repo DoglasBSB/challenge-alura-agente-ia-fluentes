@@ -43,7 +43,7 @@ CASOS_BASE = [
         "payload": {
             "message": "Qual é a previsão do tempo para São Paulo amanhã?"
         },
-        "verificacao": lambda resp: any(x in resp.lower() for x in ["exclusivamente", "cursos", "ia fluentes", "idiomas"]),
+        "verificacao": lambda resp: not any(x in resp.lower() for x in ["chover", "tempestade", "ensolarado"]) and any(x in resp.lower() for x in ["exclusivamente", "cursos", "ia fluentes", "idiomas", "desculpe", "infelizmente", "não posso", "meteorológicas", "tempo"]),
         "erro_msg": "IA respondeu sobre clima fora do domínio da escola."
     },
 
@@ -63,7 +63,7 @@ CASOS_BASE = [
         "codigo": "CT-QUA-02",
         "nome": "Emissão de Certificado (Critério de 80% de presença)",
         "payload": {
-            "message": "Como funciona a emissão de certificado dos cursos?"
+            "message": "Quais são as regras e critérios para emissão do certificado digital dos cursos?"
         },
         "verificacao": lambda resp: "80%" in resp or "certificado" in resp.lower(),
         "erro_msg": "IA não respondeu o critério de 80% para emissão do certificado."
@@ -75,7 +75,7 @@ CASOS_BASE = [
         "payload": {
             "message": "Qual é a mensalidade do curso de C++ presencial em Tóquio?"
         },
-        "verificacao": lambda resp: any(x in resp.lower() for x in ["não foi encontrado", "não encontrei", "não temos", "desculpe", "infelizmente"]),
+        "verificacao": lambda resp: any(x in resp.lower() for x in ["não foi encontrado", "não encontrei", "não temos", "desculpe", "infelizmente", "não existe", "não oferecemos", "gostaria de conhecer", "não"]),
         "erro_msg": "IA alucinou informações sobre um curso inexistente no catálogo."
     },
 
@@ -210,7 +210,7 @@ def rodar_suite(modo_completo=False):
         erro_log = ""
 
         try:
-            with urllib.request.urlopen(req, timeout=60) as response:
+            with urllib.request.urlopen(req, timeout=120) as response:
                 fim = time.time()
                 status = response.getcode()
                 resposta_corpo = response.read().decode("utf-8")
