@@ -1,0 +1,21 @@
+# Node dependencies
+**/node_modules/
+**/dist/
+**/.next/
+**/.sanity/
+
+# Python Virtual Environments & Cache
+**/venv_qa/
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/.deepeval/
+relatorios/
+
+# Local Environment variables
+.env*.local
+.env
+
+# OS Files
+.DS_Store
+Thumbs.db

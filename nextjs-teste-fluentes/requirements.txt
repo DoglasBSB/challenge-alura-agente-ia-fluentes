@@ -1,0 +1,23 @@
+# ── Aplicação ────────────────────────────────────────────────────────────────────
+fastapi
+uvicorn
+httpx
+pydantic
+
+# ── QA — ferramentas de teste ────────────────────────────────────────────────────
+deepeval
+google-genai
+giskard
+garak
+
+# ── QA — carga e latência ────────────────────────────────────────────────────────
+locust
+
+# ── Utilitários de teste ─────────────────────────────────────────────────────────
+requests
+pandas
+pytest
+pytest-asyncio
+pytest-repeat
+pytest-rerunfailures
+pytest-xdist
