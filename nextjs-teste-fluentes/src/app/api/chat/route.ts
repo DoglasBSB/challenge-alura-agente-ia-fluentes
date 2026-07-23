@@ -214,7 +214,7 @@ Pergunta do aluno: ${message}`;
         options: {
           temperature: 0.0,
           num_ctx: 4096,
-          num_predict: 256,
+          num_predict: 768,
         },
       };
 
