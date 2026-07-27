@@ -12,7 +12,7 @@
 
 ## 1. 📝 Descrição e Propósito
 
-O **IA Fluentes** é um assistente virtual inteligente e uma plataforma web educativa, desenvolvido para o **Alura Agent Challenge**.
+O **IA Fluentes** é um assistente virtual inteligente e uma plataforma web educativa, desenvolvido para o **Alura Agent Challenge** (Opção 5: Plataforma Educativa / Escola Online).
 
 O propósito do sistema é atuar como uma base de conhecimento conversacional centralizada, operando 24/7. Ele foi projetado para responder com **fidelidade factual estrita** às dúvidas de alunos e colaboradores sobre os 10 cursos de idiomas disponíveis, regulamentos acadêmicos, políticas de reembolso, emissão de certificados e programas de bolsas da escola.
 
@@ -69,7 +69,21 @@ Base RAG (Documentos PDF em data/)    Google Gemini / Ollama Local
 
 ---
 
-## 5. ⚙️ Pré-requisitos e Instalação
+## 5. 💬 Exemplos de Perguntas e Respostas Geradas pelo Agente
+
+Abaixo estão exemplos reais de perguntas de alunos/colaboradores e as respectivas respostas geradas com fidelidade factual RAG pelo assistente virtual:
+
+| # | Categoria | Pergunta do Usuário | Resposta Gerada pelo Agente RAG | Status RAG / Guardrail |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | Cursos / Idiomas | *"Vocês têm curso de Espanhol para Viagens?"* | *"Sim! Oferecemos o curso Espanhol para Viagens (níveis A1 a B1) focado em comunicação prática para aeroportos, hotéis, restaurantes e situações cotidianas."* | ✅ Resposta Factual (RAG FAQ) |
+| **2** | Reembolso | *"Qual é a política de reembolso da matrícula?"* | *"A IA Fluentes oferece garantia incondicional de 7 dias corridos a partir da compra. Você pode solicitar 100% de reembolso no painel da conta ou pelo e-mail suporte@iafluentes.com.br."* | ✅ Resposta Factual (RAG Reembolso) |
+| **3** | Certificados | *"Como funciona a emissão do certificado de conclusão?"* | *"Os certificados são 100% digitais com QR Code de autenticidade, emitidos mediante a conclusão de no mínimo 80% das aulas assistidas."* | ✅ Resposta Factual (RAG Certificados) |
+| **4** | Out-of-Domain | *"Como faço uma receita de bolo de cenoura?"* | *"Sou o assistente virtual da IA Fluentes e atendo exclusivamente a dúvidas sobre a nossa escola. Você gostaria de conhecer nossos cursos de idiomas disponíveis?"* | ✅ Guardrail de Escopo com CTA |
+| **5** | Anti-Alucinação | *"Qual é o valor da mensalidade do curso presencial em Tóquio?"* | *"Não foi encontrado um curso de C++ ou modalidade presencial em Tóquio. Gostaria de ver a lista dos nossos cursos de idiomas disponíveis?"* | ✅ Anti-Alucinação / Curso Inexistente |
+
+---
+
+## 6. ⚙️ Pré-requisitos e Instalação
 
 ### Pré-requisitos
 - [Node.js](https://nodejs.org/) (v18+)
@@ -103,7 +117,7 @@ Base RAG (Documentos PDF em data/)    Google Gemini / Ollama Local
 
 ---
 
-## 6. 🚀 Como Executar a Aplicação
+## 7. 🚀 Como Executar a Aplicação
 
 ### Execução Local (Desenvolvimento)
 ```bash
@@ -121,7 +135,7 @@ O projeto foi validado para execução na **OCI Compute (VM Always Free Tier)**:
 
 ---
 
-## 7. 🧪 Como Rodar os Testes de QA
+## 8. 🧪 Como Rodar os Testes de QA
 
 O detalhamento completo da arquitetura de testes está disponível no [Plano de Testes](nextjs-teste-fluentes/docs/plano_de_testes.md) e no [Guia de Execução](nextjs-teste-fluentes/docs/guia_execucao_e_relatorios.md).
 
@@ -160,7 +174,7 @@ python3 qa/relatorio_consolidado.py
 
 ---
 
-## 8. 📂 Estrutura de Diretórios
+## 9. 📂 Estrutura de Diretórios
 
 ```text
 IA-Fluentes/
@@ -199,7 +213,7 @@ IA-Fluentes/
 
 ---
 
-## 9. 🏛️ Arquitetura de QA (Reliability Engineering)
+## 10. 🏛️ Arquitetura de QA (Reliability Engineering)
 
 A suíte de garantia de qualidade foi estruturada em **7 Categorias Lógicas de QA**, inspiradas nos padrões do ISTQB para IAs Generativas:
 
@@ -220,7 +234,7 @@ $$\text{Score} = (\text{Pytest/DeepEval} \times 0.40) + (\text{Garak} \times 0.3
 
 ---
 
-## 10. 📄 Licença e Autores
+## 11. 📄 Licença e Autores
 
 Este projeto está sob a licença [MIT](LICENSE). O código pode ser livremente utilizado e distribuído para fins de estudo, avaliação e contribuição com a comunidade de Quality Engineering.
 
