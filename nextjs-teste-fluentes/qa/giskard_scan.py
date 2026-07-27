@@ -98,6 +98,14 @@ dataset = giskard.Dataset(
 # ── 4. Executa o scan ───────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    import sys
+
+    is_smoke = "--smoke" in sys.argv or "--fast" in sys.argv
+
+    if is_smoke:
+        print("⚡ Executando Giskard no MODO SMOKE TEST (Apenas 4 perguntas essenciais)...")
+        dataset.df = dataset.df.iloc[[0, 5, 9, 14]].reset_index(drop=True)
+
     print("🔍 Iniciando scan Giskard...")
     print(f"   Assistente: {BASE_URL}")
     print(f"   Dataset: {len(dataset.df)} perguntas\n")
