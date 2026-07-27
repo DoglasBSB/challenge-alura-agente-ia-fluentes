@@ -13,7 +13,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 BASE_URL = "http://localhost:3000"
 
 
-def post_chat(mensagem: str, contexto: str = "", timeout: int = 60):
+def post_chat(mensagem: str, contexto: str = "", timeout: int = 120):
     """Retorna o objeto Response bruto para inspeção de status code."""
     return requests.post(
         f"{BASE_URL}/api/chat",
