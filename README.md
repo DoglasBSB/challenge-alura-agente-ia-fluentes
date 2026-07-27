@@ -158,14 +158,14 @@ python3 tests/suite_test_chat.py --full
 
 ### C. Auditorias e Red Teaming (Locust, Garak, Giskard)
 ```bash
-# 1. Teste de Carga e Latência Concorrente
+# 1. Teste de Carga e Latência Concorrente (Locust)
 ./venv_qa/bin/locust -f qa/locustfile.py --host=http://localhost:3000 --users=5 --spawn-rate=1 --run-time=1m --headless
 
-# 2. Red Teaming em Massa contra Jailbreaks
-./venv_qa/bin/python3 qa/garak_generator.py
+# 2. Red Teaming em Massa contra Jailbreaks (Garak - Smoke Test Rápido ~15s)
+./venv_qa/bin/python3 qa/run_garak_smoke.py
 
-# 3. Varredura de Riscos e Viés de Modelo
-./venv_qa/bin/python3 qa/giskard_scan.py
+# 3. Varredura de Riscos e Viés de Modelo (Giskard - Smoke Test Rápido ~30s)
+./venv_qa/bin/python3 qa/giskard_scan.py --smoke
 
 # 4. Consolidação do Dashboard HTML Executivo
 python3 qa/relatorio_consolidado.py

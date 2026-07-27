@@ -43,14 +43,22 @@ python3 tests/suite_test_chat.py --full
 ```
 *Gera:* `relatorios/locust_stats.csv` e `relatorios/locust_report.html`
 
-### D. Red Teaming em Massa (Garak)
+### D. Red Teaming (Garak)
 ```bash
-./venv_qa/bin/python3 qa/garak_generator.py
+# ⚡ Smoke Test (Execução Rápida em ~15s):
+./venv_qa/bin/python3 qa/run_garak_smoke.py
+
+# 🔍 Varredura Completa (Nightly Audit ~45min):
+./venv_qa/bin/garak --generator_option_file qa/garak_generator.py --generator_name AssistenteChatGenerator --probes promptinject,dan,toxicity
 ```
 *Gera:* `relatorios/garak.report.jsonl`
 
 ### E. Varredura de Riscos (Giskard)
 ```bash
+# ⚡ Smoke Test (Execução Rápida em ~30s com 4 amostras):
+./venv_qa/bin/python3 qa/giskard_scan.py --smoke
+
+# 🔍 Varredura Completa (Full Scan ~15min):
 ./venv_qa/bin/python3 qa/giskard_scan.py
 ```
 *Gera:* `relatorios/giskard_scan.html`
