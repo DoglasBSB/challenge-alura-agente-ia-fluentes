@@ -34,23 +34,32 @@ class GeminiJudge(DeepEvalBaseLLM):
         return self.client
 
     def generate(self, prompt: str, schema=None) -> str:
+        import time
         # Se schema for passado, usamos a restrição nativa de JSON Schema do Gemini
-        if schema:
-            config = types.GenerateContentConfig(
-                response_mime_type="application/json",
-                response_schema=schema
-            )
-            response = self.client.models.generate_content(
-                model=self.model_name,
-                contents=prompt,
-                config=config
-            )
-        else:
-            response = self.client.models.generate_content(
-                model=self.model_name,
-                contents=prompt
-            )
-        return response.text
+        for tentativa in range(4):
+            try:
+                if schema:
+                    config = types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        response_schema=schema
+                    )
+                    response = self.client.models.generate_content(
+                        model=self.model_name,
+                        contents=prompt,
+                        config=config
+                    )
+                else:
+                    response = self.client.models.generate_content(
+                        model=self.model_name,
+                        contents=prompt
+                    )
+                return response.text
+            except Exception as e:
+                if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                    time.sleep(4 * (tentativa + 1))
+                else:
+                    raise e
+        return ""
 
     async def a_generate(self, prompt: str, schema=None) -> str:
         # Execução síncrona envelopada em coroutine para compatibilidade assíncrona
