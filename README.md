@@ -10,7 +10,7 @@
 
 ---
 
-## ☁️ Evidência do Deploy na Nuvem (OCI)
+## Evidência do Deploy na Nuvem (OCI)
 
 A aplicação foi implantada com sucesso e está operando em produção utilizando a infraestrutura da **Oracle Cloud Infrastructure (OCI)**. 
 
@@ -18,15 +18,11 @@ O ambiente foi configurado em uma instância Linux (Ubuntu), utilizando **Nginx*
 
 🔗 **Link Público de Acesso:** [http://163.176.77.75/](http://163.176.77.75/)
 
-📸 **Captura de Tela (Aplicação em Execução):**
-
-![Evidência do Deploy na OCI demonstrando o frontend e o retorno da API no painel Network](nextjs-teste-fluentes/docs/images/img-readme.png)
-
 ---
 
-## 1. 📝 Descrição e Propósito
+## Descrição e Propósito
 
-O **IA Fluentes** é um assistente virtual inteligente e uma plataforma web educativa, desenvolvido para o **Alura Agent Challenge** (Opção 5: Plataforma Educativa / Escola Online).
+O **IA Fluentes** é um assistente virtual inteligente e uma plataforma web educativa, desenvolvido para o **Alura Agent Challenge**
 
 O propósito do sistema é atuar como uma base de conhecimento conversacional centralizada, operando 24/7. Ele foi projetado para responder com **fidelidade factual estrita** às dúvidas de alunos e colaboradores sobre os 10 cursos de idiomas disponíveis, regulamentos acadêmicos, políticas de reembolso, emissão de certificados e programas de bolsas da escola.
 
@@ -36,7 +32,7 @@ Mais do que uma simples aplicação web, o repositório engloba um laboratório 
 
 ---
 
-## 2. ✨ Funcionalidades
+## Funcionalidades
 
 - 💬 **Assistente Virtual RAG 24h:** Respostas precisas e ancoradas exclusivamente nos 5 PDFs oficiais da escola.
 - 🎓 **Catálogo de 10 Cursos de Idiomas:** Inglês Iniciante, Inglês Intermediário, English Kids, Espanhol para Viagens, Francês Básico, Italiano para Conversação, Alemão Intensivo, Japonês para Iniciantes, Coreano para Fãs de K-pop e Preparação para TOEFL.
@@ -50,7 +46,7 @@ Mais do que uma simples aplicação web, o repositório engloba um laboratório 
 
 ---
 
-## 3. 🏗️ Arquitetura do Sistema
+## Arquitetura do Sistema
 
 ```text
                Usuário / Aluno
@@ -73,7 +69,7 @@ Base RAG (Documentos PDF em data/)    Google Gemini / Ollama Local
 
 ---
 
-## 4. 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Frontend & Aplicação Web:** Next.js 15 (React 19 + TypeScript + Tailwind CSS)
 - **Processamento RAG & PDFs:** Ingestor em tempo de execução via `pdf-parse` (`data/*.pdf`)
@@ -83,7 +79,7 @@ Base RAG (Documentos PDF em data/)    Google Gemini / Ollama Local
 
 ---
 
-## 5. 💬 Exemplos de Perguntas e Respostas Geradas pelo Agente
+## Exemplos de Perguntas e Respostas Geradas pelo Agente
 
 Abaixo estão exemplos reais de perguntas de alunos/colaboradores e as respectivas respostas geradas com fidelidade factual RAG pelo assistente virtual:
 
@@ -97,7 +93,7 @@ Abaixo estão exemplos reais de perguntas de alunos/colaboradores e as respectiv
 
 ---
 
-## 6. ⚙️ Pré-requisitos e Instalação
+## Pré-requisitos e Instalação
 
 ### Pré-requisitos
 - [Node.js](https://nodejs.org/) (v18+)
@@ -131,7 +127,7 @@ Abaixo estão exemplos reais de perguntas de alunos/colaboradores e as respectiv
 
 ---
 
-## 7. 🚀 Como Executar a Aplicação
+## Como Executar a Aplicação
 
 ### Execução Local (Desenvolvimento)
 ```bash
@@ -149,7 +145,7 @@ O projeto foi validado para execução na **OCI Compute (VM Always Free Tier)**:
 
 ---
 
-## 8. 🧪 Como Rodar os Testes de QA
+## Como Rodar os Testes de QA
 
 O detalhamento completo da arquitetura de testes está disponível no [Plano de Testes](nextjs-teste-fluentes/docs/plano_de_testes.md) e no [Guia de Execução](nextjs-teste-fluentes/docs/guia_execucao_e_relatorios.md).
 
@@ -188,7 +184,7 @@ python3 qa/relatorio_consolidado.py
 
 ---
 
-## 9. 📂 Estrutura de Diretórios
+## Estrutura de Diretórios
 
 ```text
 IA-Fluentes/
@@ -227,7 +223,7 @@ IA-Fluentes/
 
 ---
 
-## 10. 🏛️ Arquitetura de QA (Reliability Engineering)
+## Arquitetura de QA (Reliability Engineering)
 
 A suíte de garantia de qualidade foi estruturada em **7 Categorias Lógicas de QA**, inspiradas nos padrões do ISTQB para IAs Generativas:
 
@@ -248,13 +244,13 @@ $$\text{Score} = (\text{Pytest/DeepEval} \times 0.40) + (\text{Garak} \times 0.3
 
 ---
 
-## 11. 📄 Licença e Autores
+## Licença e Autores
 
 Este projeto está sob a licença [MIT](LICENSE). O código pode ser livremente utilizado e distribuído para fins de estudo, avaliação e contribuição com a comunidade de Quality Engineering.
 
-### 👤 Autor & Contato
+### Autor & Contato
 
-- **Desenvolvido por:** Dôglas (QA & Project Manager)
+- **Desenvolvido por:** Francisco Dôglas
 - **LinkedIn:** [linkedin.com/in/franciscodoglas](https://www.linkedin.com/in/franciscodoglas/)
 - **GitHub:** [github.com/franciscodoglas](https://github.com/franciscodoglas)
 
