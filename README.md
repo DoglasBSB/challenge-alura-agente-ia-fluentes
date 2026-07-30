@@ -10,6 +10,22 @@
 
 ---
 
+## ☁️ Evidência do Deploy na Nuvem (OCI)
+
+A aplicação foi implantada com sucesso e está operando em produção utilizando a infraestrutura da **Oracle Cloud Infrastructure (OCI)**. 
+
+O ambiente foi configurado em uma instância Linux (Ubuntu), utilizando **Nginx** como proxy reverso e **PM2** para garantir a disponibilidade contínua dos processos do Node.js (Next.js) em segundo plano.
+
+🔗 **Link Público de Acesso:** [http://163.176.77.75/](http://163.176.77.75/)
+
+📸 **Captura de Tela (Aplicação em Execução):**
+
+> **Nota para o repositório:** A imagem abaixo comprova o acesso externo via IP público e a comunicação bem-sucedida (Status 200 OK) com a rota da API do Gemini.
+
+![Evidência do Deploy na OCI demonstrando o frontend e o retorno da API no painel Network](image_ae3fdb.jpg)
+
+---
+
 ## 1. 📝 Descrição e Propósito
 
 O **IA Fluentes** é um assistente virtual inteligente e uma plataforma web educativa, desenvolvido para o **Alura Agent Challenge** (Opção 5: Plataforma Educativa / Escola Online).
@@ -243,4 +259,4 @@ Este projeto está sob a licença [MIT](LICENSE). O código pode ser livremente 
 - **Desenvolvido por:** Dôglas (QA & Project Manager)
 - **LinkedIn:** [linkedin.com/in/franciscodoglas](https://www.linkedin.com/in/franciscodoglas/)
 - **GitHub:** [github.com/franciscodoglas](https://github.com/franciscodoglas)
-- **E-mail:** franciscodoglas@gmail.com
+
