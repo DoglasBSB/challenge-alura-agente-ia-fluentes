@@ -179,7 +179,7 @@ Pergunta do aluno: ${message}`;
           ],
           generationConfig: {
             temperature: 0.0,
-            maxOutputTokens: 512,
+            maxOutputTokens: 1536,
           },
         };
 
