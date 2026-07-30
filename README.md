@@ -20,9 +20,7 @@ O ambiente foi configurado em uma instância Linux (Ubuntu), utilizando **Nginx*
 
 📸 **Captura de Tela (Aplicação em Execução):**
 
-> **Nota para o repositório:** A imagem abaixo comprova o acesso externo via IP público e a comunicação bem-sucedida (Status 200 OK) com a rota da API do Gemini.
-
-![Evidência do Deploy na OCI demonstrando o frontend e o retorno da API no painel Network](image_ae3fdb.jpg)
+![Evidência do Deploy na OCI demonstrando o frontend e o retorno da API no painel Network](nextjs-teste-fluentes/docs/images/img-readme.png)
 
 ---
 
