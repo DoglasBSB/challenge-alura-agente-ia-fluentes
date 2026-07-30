@@ -75,7 +75,7 @@ Abaixo estão exemplos reais de perguntas de alunos/colaboradores e as respectiv
 
 | # | Categoria | Pergunta do Usuário | Resposta Gerada pelo Agente RAG | Status RAG / Guardrail |
 | :--- | :--- | :--- | :--- | :--- |
-| **1** | Cursos / Idiomas | *"Vocês têm curso de Espanhol para Viagens?"* | *"Sim! Oferecemos o curso Espanhol para Viagens (níveis A1 a B1) focado em comunicação prática para aeroportos, hotéis, restaurantes e situações cotidianas."* | ✅ Resposta Factual (RAG FAQ) |
+| **1** | Cursos / Idiomas | *"Vocês têm curso de Espanhol para Viagens?"* | *Sim, a IA Fluentes oferece o curso de Espanhol para Viagens.* | ✅ Resposta Factual (RAG FAQ) |
 | **2** | Reembolso | *"Qual é a política de reembolso da matrícula?"* | *"A IA Fluentes oferece garantia incondicional de 7 dias corridos a partir da compra. Você pode solicitar 100% de reembolso no painel da conta ou pelo e-mail suporte@iafluentes.com.br."* | ✅ Resposta Factual (RAG Reembolso) |
 | **3** | Certificados | *"Como funciona a emissão do certificado de conclusão?"* | *"Os certificados são 100% digitais com QR Code de autenticidade, emitidos mediante a conclusão de no mínimo 80% das aulas assistidas."* | ✅ Resposta Factual (RAG Certificados) |
 | **4** | Out-of-Domain | *"Como faço uma receita de bolo de cenoura?"* | *"Sou o assistente virtual da IA Fluentes e atendo exclusivamente a dúvidas sobre a nossa escola. Você gostaria de conhecer nossos cursos de idiomas disponíveis?"* | ✅ Guardrail de Escopo com CTA |
