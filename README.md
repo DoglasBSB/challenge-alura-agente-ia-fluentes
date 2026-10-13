@@ -254,3 +254,5 @@ Este projeto está sob a licença [MIT](LICENSE). O código pode ser livremente 
 - **LinkedIn:** [linkedin.com/in/franciscodoglas](https://www.linkedin.com/in/franciscodoglas/)
 - **GitHub:** [github.com/franciscodoglas](https://github.com/franciscodoglas)
 
+<!-- Teste de integração Aikido Security -->
+
