@@ -9,8 +9,32 @@ Uso:
 """
 
 import os
+import re
 import requests
+from urllib.parse import urlparse, urlunparse
 from garak.generators.base import Generator
+
+
+def build_validated_url(base_url: str) -> str:
+    try:
+        # Minimal path validation
+        if "/../" in base_url or re.search(r"/%2e%2e/", base_url, re.IGNORECASE):
+            raise ValueError("Invalid path")
+        
+        parsed = urlparse(base_url)
+        
+        # Protocol + host checks
+        if parsed.scheme not in ("http", "https"):
+            raise ValueError("Invalid protocol")
+        if not parsed.hostname:
+            raise ValueError("Invalid host")
+        allowed_domains = ["localhost"]  # add your allowed domains here
+        if parsed.hostname.lower() not in allowed_domains:
+            raise ValueError("Invalid host")
+        
+        return urlunparse(parsed)
+    except Exception:
+        raise ValueError("Invalid URL")
 
 
 # ── Assistente Portal Next.js ───────────────────────────────────────────────────
@@ -24,7 +48,7 @@ class AssistenteChatGenerator(Generator):
     name = "assistente-chat-local"
     supports_multiple_generations = False
 
-    ENDPOINT = os.environ.get("PORTAL_URL", "http://localhost:3000") + "/api/chat"
+    ENDPOINT = build_validated_url(os.environ.get("PORTAL_URL", "http://localhost:3000")) + "/api/chat"
 
     def _call_model(self, prompt: str, generations_this_call: int = 1) -> list[str]:
         try:
